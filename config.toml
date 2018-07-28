@@ -65,7 +65,7 @@ enableGitInfo = false
   organizations = [ { name = "Central European University", url = "" }]
 
   gravatar = false  # Get your avatar from Gravatar.com? (true/false)
-  avatar = "portrait.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
+  avatar = "card_photo.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
   email = "alberto.stefanelli.main@gmail.com"
   address = "Budapest, Nádor u. 9, 1051, Hungary"
   office_hours = ""
