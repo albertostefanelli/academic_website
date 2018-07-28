@@ -24,17 +24,17 @@ weight = 5
 [[education.courses]]
   course = "PhD Candidate in Political Science"
   institution = "Central European University, Budapest, Hungary"
-  year = 2018 - 
+  year = 
 
 [[education.courses]]
   course = "MA in Political Science"
   institution = "Central European University, Budapest, Hungary"
-  year = 2016 - 2018
+  year = 2018
 
 [[education.courses]]
   course = "BA in Political Science, International Relations, Public Administration"
   institution = "University of Padua, Padua, Italy"
-  year = 2008
+  year = 2015 
  
 +++
 
