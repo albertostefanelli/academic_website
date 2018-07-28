@@ -15,22 +15,22 @@ weight = 60
 
 +++
 
-+ ## **TA for R Basics (ECPR)**
++ **TA for R Basics (ECPR)**
 
 Teaching Assistant in the R Basics course at the 2018 ECPR Method School in Budapest. Instructor: Akos Mate
 
-+ ## **TA for Text Mining Boot Camp (CEU, ITI Project) **
++ **TA for Text Mining Boot Camp (CEU, ITI Project)**
 
 Teaching Assistant in the Text Mining Boot Camp. Introduction to Text Mining with R. Instructor: Jessie Labov and Littvay (Levi) Levente
 
-+ ## **TA for Regression Refresher (ECPR) **
++ **TA for Regression Refresher (ECPR)**
 
 Teaching Assistant at the Winter School in Methods and Techniques organised by the European Consortium for Political Research (ECPR)
 
-+ ## **TA for Experimental Political Science (CEU) **
++ **TA for Experimental Political Science (CEU)**
 
 Teaching Assistant and guest speaker (Human Intelligence Task platforms) in the Experimental Political Science course. Instructor: Littvay (Levi) Levente
 
-+ ## **TA for Text Analysis Across Discipline (CEU, ITI Project) **
++ **TA for Text Analysis Across Discipline (CEU, ITI Project)**
 
 Teaching Assistant (data management and analysis) in the university wise course Text Analysis Across Discipline. Instructor: Jessie Labov
