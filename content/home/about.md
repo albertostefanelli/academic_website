@@ -24,7 +24,6 @@ weight = 5
 [[education.courses]]
   course = "PhD Candidate in Political Science"
   institution = "Central European University, Budapest, Hungary"
-  year = to present
 
 [[education.courses]]
   course = "MA in Political Science"
