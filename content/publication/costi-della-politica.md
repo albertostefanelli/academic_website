@@ -23,7 +23,7 @@ publication = "in *Il Finanziamento Alla Politica in Italia*, ser. Biblioteca di
 publication_short = ""
 
 # Abstract and optional shortened version.
-abstract = "The distortion of public financing is a prototypical characteristic of the Italian party system. In this work, we (1) review the complex legal framework that regulated and regulates the public resources destinated to Italian political parties and (2) analyse the discrepancies between the amount of resources obtained and utilised. First, we found that throughout the considered period, the Italian legislator progressively increased the public resources devoted to the financing of politics. Second, we demonstrated that electoral campaign reimbursements are sensibly higher of what Italian parties spend during the campaign. Thirdly, we showed that - contrary of what has been marketed by Italian legislators -public financing is still in place and Italian parties receive public resources in form of indirect contributions."
+abstract = "The distortion of public financing is a prototypical characteristic of the Italian party system. In this work, we (1) review the complex legal framework that regulated and regulates the public resources destinated to Italian political parties and (2) analyse the discrepancies between the amount of resources obtained and utilised. First, we found that throughout the considered period, the Italian legislator progressively increased the public resources devoted to the financing of politics. Second, we demonstrated that electoral campaign reimbursements are sensibly higher of what Italian parties spend during the campaign. Thirdly, we showed that - contrary of what has been marketed by Italian legislators - public financing is still in place and Italian parties receive public resources in form of indirect contributions."
 abstract_short = ""
 
 # Featured image thumbnail (optional)
@@ -67,4 +67,3 @@ highlight = true
 
 +++
 
-#Further details on your publication can be written here using *Markdown* for formatting
