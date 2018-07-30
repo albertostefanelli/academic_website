@@ -2,7 +2,7 @@
 title = "Costi della politica e finanziamenti: Il livello locale"
 
 # Date first published.
-date = 2006
+date = 2006-00-00
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["Marco Almagisti", "Alberto Stefanelli"]
