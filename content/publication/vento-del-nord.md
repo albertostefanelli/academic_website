@@ -19,7 +19,7 @@ authors = ["Marco Almagisti", "Alberto Stefanelli"]
 publication_types = ["2"]
 
 # Publication name and optional abbreviated version.
-publication = "in *Cambiamento o Assestamento? Le Elezioni Amministrative Del 2016*, Istituto Carlo Cattaneo, 2016, pp. 9–22
+publication = "in *Cambiamento o Assestamento? Le Elezioni Amministrative Del 2016*, Istituto Carlo Cattaneo, 2016, pp. 9–22"
 publication_short = ""
 
 # Abstract and optional shortened version.
