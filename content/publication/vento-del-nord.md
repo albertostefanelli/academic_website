@@ -1,8 +1,8 @@
 +++
-title = "Costi della politica e finanziamenti: Il livello locale"
+title = "Dove soffia il vento del Nord"
 
 # Date first published.
-date = 2018-01-01
+date = 2016-01-01
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
 authors = ["Marco Almagisti", "Alberto Stefanelli"]
@@ -16,14 +16,14 @@ authors = ["Marco Almagisti", "Alberto Stefanelli"]
 # 4 = Technical report
 # 5 = Book
 # 6 = Book chapter
-publication_types = ["6"]
+publication_types = ["2"]
 
 # Publication name and optional abbreviated version.
-publication = "in *Il Finanziamento Alla Politica in Italia*, ser. Biblioteca di testi e studi (1189), *D. R. Piccio*, Ed., Carocci"
+publication = "in *Cambiamento o Assestamento? Le Elezioni Amministrative Del 2016*, Istituto Carlo Cattaneo, 2016, pp. 9–22
 publication_short = ""
 
 # Abstract and optional shortened version.
-abstract = "The distortion of public financing is a prototypical characteristic of the Italian party system. In this work, we (1) review the complex legal framework that regulated and regulates the public resources destinated to Italian political parties and (2) analyse the discrepancies between the amount of resources obtained and utilised. First, we found that throughout the considered period, the Italian legislator progressively increased the public resources devoted to the financing of politics. Second, we demonstrated that electoral campaign reimbursements are sensibly higher of what Italian parties spend during the campaign. Thirdly, we showed that - contrary of what has been marketed by Italian legislators - public financing is still in place and Italian parties receive public resources in form of indirect contributions."
+abstract = "The Italian regional elections of 2015 have made clear the changes that are occurring in the Italian political and party system. Our research aims to explain how the leader-oriented voting has changed over time and space and how the  presidenzialization-personalization of regional politics influences the voting behaviour and the electoral output. First, we describe the cross-regional differentiation in regional electoral systems and we will briefly describe the political background of the Veneto region. Second, we will describe our hypotheses focusing on the region of Veneto. Specifically, we believe that right-wing politicians are more likely to personalise their campaign and thus to have a higher personalization index. We test this our hypothesis using analysing the 2015 electoral data and the political offer and of the structure of the electoral race."
 abstract_short = ""
 
 # Featured image thumbnail (optional)
@@ -39,7 +39,7 @@ selected = true
 projects = []
 
 # Links (optional).
-url_pdf = "pdf/almagisti_stefanelli_fianziamento politica a livello locale.pdf"
+url_pdf = ""
 url_preprint = ""
 url_code = ""
 url_dataset = ""
