@@ -14,9 +14,9 @@ subtitle = ""
 weight = 60
 
 +++
-+ **TA for R Basics (Summer 2018, ECPR)**
++ **TA for Atomated Collection of Web and Social Data (Summer 2018, ECPR)**
 
-Teaching Assistant in the R Basics course at the 2018 ECPR Method School in Budapest. Instructor: Akos Mate
+Teaching Assistant in the Automated Collection of Web and Social Data course at the 2018 ECPR Method School in Budapest. Instructor: Pablo Barberá
 
 + **TA for R Basics (Summer 2018, ECPR)**
 
