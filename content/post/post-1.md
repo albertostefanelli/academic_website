@@ -2,7 +2,6 @@
 title = "Academic: the website designer for Hugo"
 
 date = 2006-01-02
-lastmod = 2006-01-02
 draft = false
 
 # Authors. Comma separated list, e.g. `["Bob Smith", "David Jones"]`.
