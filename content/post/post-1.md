@@ -2,7 +2,7 @@
 date = 2017-12-01
 title = "My first blog post"
 
-tags = ["academic"]
+tags = []
 summary = "Create a beautifully simple website or blog in under 10 minutes."
 +++
 
