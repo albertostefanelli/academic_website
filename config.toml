@@ -50,24 +50,24 @@ enableGitInfo = false
 [params]
   # Color theme.
   #   Choose from `default`, `ocean`, `forest`, `coffee`, `dark`, or `1950s`.
-  color_theme = "coffee"
+  color_theme = "forest"
 
   # Font style.
   #   Choose from `default`, `classic`, or `playfair`.
-  font = "default"
+  font = "playfair"
 
   # Your details.
   name = "Alberto Stefanelli"
-  role = "PhD Candidate"
+  role = "PhD Candidate, Data Scientist, Consultant"
 
   # Organizations/Affiliations.
   #   Separate multiple entries with a comma, using the form: `[ {name="Org1", url=""}, {name="Org2", url=""} ]`.
-  organizations = [ { name = "Central European University", url = "" }]
+  organizations = [ { name = "KU Leuven, Centre of Sociological Research (CeSO)", url = "https://soc.kuleuven.be/ceso" }]
 
   gravatar = false  # Get your avatar from Gravatar.com? (true/false)
   avatar = "card_photo.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
   email = "alberto.stefanelli.main@gmail.com"
-  address = "Budapest, Nádor u. 9, 1051, Hungary"
+  address = "Parkstraat 45, 3000 Leuven, Belgium"
   office_hours = ""
   phone = ""
   skype = ""
@@ -99,7 +99,7 @@ enableGitInfo = false
   #   1: Google Maps
   #   2: OpenStreetMap (Mapnik)
   #   3: OpenStreetMap (Mapbox)
-  map =1
+  map =0
   map_api_key = "AIzaSyCMhZGzQEyABLRLiXTlN3i3jcgDLS48Vqk"
   latitude = "47.500471"
   longitude = "19.049593"
@@ -286,10 +286,10 @@ enableGitInfo = false
   url = "#teaching"
   weight = 5
 
-[[menu.main]]
-  name = "Contact"
-  url = "#contact"
-  weight = 6
+#[[menu.main]]
+#  name = "Contact"
+#  url = "#contact"
+#  weight = 6
 
 # Link to a PDF of your resume/CV from the menu.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
