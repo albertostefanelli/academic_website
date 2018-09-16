@@ -65,7 +65,7 @@ enableGitInfo = false
   organizations = [ { name = "KU Leuven, Centre of Sociological Research (CeSO)", url = "https://soc.kuleuven.be/ceso" }]
 
   gravatar = false  # Get your avatar from Gravatar.com? (true/false)
-  avatar = "card_photo.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
+  avatar = "avatar_2.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
   email = "alberto.stefanelli.main@gmail.com"
   address = "Parkstraat 45, 3000 Leuven, Belgium"
   office_hours = ""
