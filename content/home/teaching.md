@@ -15,14 +15,16 @@ weight = 60
 
 +++
 
-+ **TA for Atomated Collection of Web and Social Data (Pablo Barberá, Summer 2018, ECPR)**
+**I have served as Teaching Assistant for the following courses:**
 
-+ **TA for R Basics (Akos Mate, Summer 2018, ECPR)**
++ Atomated Collection of Web and Social Data (Pablo Barberá, Summer 2018, ECPR)
 
-+ **TA for Text Mining Boot Camp (Srpint 2018 Central European University, ITI Project)**
++ R Basics (Akos Mate, Summer 2018, ECPR)
 
-+ **TA for Regression Refresher (Levi Levente, Winter 2018, ECPR)**
++ Text Mining Boot Camp (Srpint 2018 Central European University, ITI Project)
 
-+ **TA for Experimental Political Science (Winter 2018, Central European University)**
++ Regression Refresher (Levi Levente, Winter 2018, ECPR)
 
-+ **TA for Text Analysis Across Discipline (Fall 2017, Central European University, ITI Project)**
++ Experimental Political Science (Winter 2018, Central European University)
+
++ Text Analysis Across Discipline (Fall 2017, Central European University, ITI Project)
