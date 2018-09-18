@@ -22,8 +22,8 @@ weight = 5
 
 # List your qualifications (such as academic degrees).
 [[education.courses]]
-  course = "PhD Candidate in Political Science"
-  institution = "Central European University, Budapest, Hungary"
+  course = "PhD Candidate"
+  institution = " KU Leuven, Leuven, Belgium"
 
 [[education.courses]]
   course = "MA in Political Science"
@@ -39,10 +39,11 @@ weight = 5
 
 # Biography
 
-I am  prospective PhD student at the Department of Political Science at the Central European University (CEU). My research interests span from voting behaviour, methodology, to political communication. Methods wise, I am particularly interested in graphical causal models, machine learning algorithms, text analysis, and big data. 
+I am a prospective PhD student at the [Centre for Sociological Research](https://soc.kuleuven.be/ceso) at KU Leuven, Belgium. My research interests are mostly within the filed of voting behaviour, party finance, and political communication. Methods wise, I am particularly interested in graphical causal models, machine learning algorithms, text analysis, and big data. 
 
-I am currently external consultant and analysis for Intellectual Themes Initiative at CEU and for the European Consortium for Political Research Summer and Winter Schools for Methods and Techniques. 
+I am member of the survey and experimental teams of Team Populism, a research group that brings together renowned scholars from Europe and the Americas to study the causes and consequences of populism.
 
-I am the vice president of the CEU Populism Research Group (POPRES) and member of the survey and experimental teams of Team Populism, a research group that brings together renowned scholars from Europe and the Americas to study the causes and consequences of populism.
+Concerning the private sector, I am currently external consultant and analyst for[ZK Analytics](http://www.zkanalytics.com/) and for the European Consortium for Political Research (ECPR) [methods schools](https://ecpr.eu/Events/EventTypeDetails.aspx?EventTypeID=5). 
 
-I love cooking, films, games, reading about tech stuff, and programming. Huge Linux fan boy.
+
+I love cooking, films, games, reading about tech stuff, and programming. Huge Linux/Unix fan boy.

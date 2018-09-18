@@ -21,10 +21,10 @@ weight = 60
 
 + R Basics (Akos Mate, Summer 2018, ECPR)
 
-+ Text Mining Boot Camp (Srpint 2018 Central European University, ITI Project)
++ Text Mining Boot Camp (ITI Project, Srpint 2018, Central European University)
 
 + Regression Refresher (Levi Levente, Winter 2018, ECPR)
 
-+ Experimental Political Science (Winter 2018, Central European University)
++ Experimental Political Science (Levi Levente, Winter 2018, Central European University)
 
-+ Text Analysis Across Discipline (Fall 2017, Central European University, ITI Project)
++ Text Analysis Across Discipline (ITI Project, Fall 2017, Central European University)
