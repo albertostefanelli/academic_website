@@ -134,7 +134,7 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
         ```
    
    5. Add a shortcut to add an automatic R code block. 
-  + Create a file in `Sublime Text 3/Packages/R-IDE/support` called `ide-r-chunk.sublime-snippet` and paste the following code:
+        + Create a file in `Sublime Text 3/Packages/R-IDE/support` called `ide-r-chunk.sublime-snippet` and paste the following code:
 
         ```JSON 
                 <snippet>
@@ -151,7 +151,7 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
                     <!-- <scope>source.python</scope> -->
                 </snippet>
         ``` 
-  + Open `Sublime Text > Preferences > Key Bindings` and paste in the windows that just opened the following code:
+        + Open `Sublime Text > Preferences > Key Bindings` and paste in the windows that just opened the following code:
 
         ```JSON
                 [
@@ -164,8 +164,8 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
                   }    
                 ]
         ```
-        
-  + Now you can use the `command+alt+c` key combination to insert an R code block in your R-Markdown file 
+
+        + Now you can use the `command+alt+c` key combination to insert an R code block in your R-Markdown file 
 
 ### What now?
 
