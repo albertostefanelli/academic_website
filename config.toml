@@ -62,8 +62,12 @@ enableGitInfo = false
 
   # Organizations/Affiliations.
   #   Separate multiple entries with a comma, using the form: `[ {name="Org1", url=""}, {name="Org2", url=""} ]`.
-  organizations = [ { name = "KU Leuven, Centre of Sociological Research (CeSO)", url = "https://soc.kuleuven.be/ceso" },{name=
-  Institute for Social and Political Opinion Research (ISPO)", url = "https://soc.kuleuven.be/ceso/ispo"}
+  organizations = [
+  { name = "KU Leuven, Centre of Sociological Research (CeSO)", url = "https://soc.kuleuven.be/ceso" 
+  },
+  { name= "Institute for Social and Political Opinion Research (ISPO)", 
+  url = "https://soc.kuleuven.be/ceso/ispo"
+  }
   ]
 
   gravatar = false  # Get your avatar from Gravatar.com? (true/false)
