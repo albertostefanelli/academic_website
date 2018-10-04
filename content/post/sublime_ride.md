@@ -53,10 +53,10 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
 
 6. Install the R package [`languageserver`](https://github.com/REditorSupport/languageserver) from CRAN. You can type `R` in the console that you just open in the right column of your Sublime Text. **NB**: R (and R-GUI) is different from R-Studio and they do not share the same package library. If you commonly use R-Studio and you switch to base R, remember to install the CRAN packages that you want to use. 
 
-```R
-# install R package languageserver
-install.packages("languageserver")
-```
+    ```R
+    # install R package languageserver
+    install.packages("languageserver")
+    ```
 
 6. Set up SendCode to use Terminus, `Tools > Command Palette > SendCode: Choose Program` and select `Terminus`. If you don't like to have a console in your working environment you can send your code to an external program such as R-GUI, R-Studio, or your default shell terminal. Even if it is not necessary, I strongly advise to install and use `rtichoke` as r terminal (see point 11 below).
 
