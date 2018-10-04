@@ -105,7 +105,7 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
 
 11. Fine tuning **(Optional)**
     1. Install rtichoke to get an improved console for R with multiline editing and rich syntax highlight. Follow the instructions on the [rtichoke GitHub page](https://github.com/randy3k/rtichoke). Remember to type in Terminus (or in your bash terminal) `rtichoke` instead of `r`.  
-    2. Install [MarkdownEditing](https://packagecontrol.io/packages/MarkdownEditing) or [MarkdownComplements](https://packagecontrol.io/packages/MarkdownComplements) for better Markdown support such as list and tables.
+    2. Install [MarkdownEditing](https://packagecontrol.io/packages/MarkdownEditing) or [MarkdownComplements](https://packagecontrol.io/packages/MarkdownComplements) for better Markdown support such as lists and tables.
     3. Install a Git plug-in from the Package Control (point n2) such as [this one](https://github.com/kemayo/sublime-text-git).
     4. Tune R-IDE for a better writing experience. Create a file called `R Markdown.sublime-settings` in `/Sublime Text 3/Packages/User` and paste the following code. 
     
@@ -151,7 +151,7 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
                     <!-- <scope>source.python</scope> -->
                 </snippet>
         ``` 
-        + Open `Sublime Text > Preferences > Key Bindings` and paste in the windows that just opened the following code:
+        + Open `Sublime Text > Preferences > Key Bindings` and paste in the window that just opened the following code:
 
         ```JSON
                 [
