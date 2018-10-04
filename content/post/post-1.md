@@ -1,7 +1,6 @@
 +++
 date = 2018-09-26
 title = "Scientific writing made easy 101: Sublime and R-IDE"
-author = Alberto Stefanelli
 
 tags = []
 summary = "Set up a beautifully simple multi purpose working suite in under 10 minutes."
