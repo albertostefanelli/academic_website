@@ -109,61 +109,62 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
     3. Install a Git plug-in from the Package Control (point n2) such as [this one](https://github.com/kemayo/sublime-text-git).
     4. Tune R-IDE for a better writing experience. Create a file called `R Markdown.sublime-settings` in `/Sublime Text 3/Packages/User` and paste the following code. 
     
-    ```JSON
-            // These settings override both User and Default settings for the R Markdown syntax
+        ```JSON
+                // These settings override both User and Default settings for the R Markdown syntax
 
-            "tab_size": 4,
-            "translate_tabs_to_spaces": true,
-            "trim_trailing_white_space_on_save": false,
-            "auto_match_enabled": true,
+                "tab_size": 4,
+                "translate_tabs_to_spaces": true,
+                "trim_trailing_white_space_on_save": false,
+                "auto_match_enabled": true,
 
-            // Layout
-            "draw_centered": true,
-            "word_wrap": true,
-            "wrap_width": 100,
-            "rulers": [],
+                // Layout
+                "draw_centered": true,
+                "word_wrap": true,
+                "wrap_width": 100,
+                "rulers": [],
 
-            // Line
-            "line_numbers": false,
-            "highlight_line": false,
-            "line_padding_top": 2,
-            "line_padding_bottom": 3,
+                // Line
+                "line_numbers": false,
+                "highlight_line": false,
+                "line_padding_top": 2,
+                "line_padding_bottom": 3,
 
-            "gutter": false,
-            "scroll_past_end": true
-    ```
+                "gutter": false,
+                "scroll_past_end": true
+        ```
    
    5. Add a shortcut to add an automatic R code block. 
   + Create a file in `Sublime Text 3/Packages/R-IDE/support` called `ide-r-chunk.sublime-snippet` and paste the following code:
 
-    ```JSON 
-            <snippet>
-                <content><![CDATA[
-            ```{r $1}
-            $2
-            ```
-            ]]></content>
-                <scope>text.html.markdown.rmarkdown</scope>
-                <description>Insert knitr Markdown chunk</description>
-                <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-                <!-- <tabTrigger>hello</tabTrigger> -->
-                <!-- Optional: Set a scope to limit where the snippet will trigger -->
-                <!-- <scope>source.python</scope> -->
-            </snippet>
-    ``` 
+        ```JSON 
+                <snippet>
+                    <content><![CDATA[
+                ```{r $1}
+                $2
+                ```
+                ]]></content>
+                    <scope>text.html.markdown.rmarkdown</scope>
+                    <description>Insert knitr Markdown chunk</description>
+                    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+                    <!-- <tabTrigger>hello</tabTrigger> -->
+                    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+                    <!-- <scope>source.python</scope> -->
+                </snippet>
+        ``` 
   + Open `Sublime Text > Preferences > Key Bindings` and paste in the windows that just opened the following code:
 
-    ```JSON
-            [
-                  { 
-                "keys": ["super+alt+c"], 
-                "command": "insert_snippet", "args": {"name": "Packages/R-IDE/support/ide-r-chunk.sublime-snippet"}, 
-                "context": [
-                  { "operand": "text.html.markdown.rmarkdown", "operator": "equal", "match_all": true, "key": "selector" }
+        ```JSON
+                [
+                      { 
+                    "keys": ["super+alt+c"], 
+                    "command": "insert_snippet", "args": {"name": "Packages/R-IDE/support/ide-r-chunk.sublime-snippet"}, 
+                    "context": [
+                      { "operand": "text.html.markdown.rmarkdown", "operator": "equal", "match_all": true, "key": "selector" }
+                    ]
+                  }    
                 ]
-              }    
-            ]
-    ```
+        ```
+        
   + Now you can use the `command+alt+c` key combination to insert an R code block in your R-Markdown file 
 
 ### What now?
