@@ -33,9 +33,9 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
 
 ### What I need to start: 10 easy steps
 
-1. [Download](https://www.sublimetext.com/) and install Sublime. If you are using MacOs you can use [HomeBrew](https://brew.sh/) to install it trough Terminal using the command `brew cask install sublime-text`.
+1. [Download](https://www.sublimetext.com/) and install Sublime. If you are using MacOs you can install it trough [HomeBrew](https://brew.sh/) using the command `brew cask install sublime-text` in your Terminal app.
 
-2. Open Sublime and [follow the instructions](https://packagecontrol.io/installation) to install its package manager **PackageControl**
+2. Open Sublime and [follow these instructions](https://packagecontrol.io/installation) to install its package manager **PackageControl**
 
 3. Open the command palette in `Tools > Command Palette`. Select `Package Control: Advance Install Package` and copy and paste the following list of packages `R-IDE, LSP, Citer, SendCode, Terminus, BracketHighlighter, WordCount`. If the previous command fails for any reason (some package could change name or be eliminated), install the packages one by one manually using `Package Control: Install Package`
     + **R-IDE**: A package maintained by [randy3k](https://github.com/randy3k) that transforms Sublime into R-Studio with some cool features added.
@@ -49,7 +49,7 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
 
 4. Shutdown Sublime completely and re-open it. 
 
-5. Go `Tools > Layout > Columns: 2`. This command splits the Sublime main windows into two parts. Move the cursor on the right column, open the command palette `Tools > Command Palette` and select `Terminus: Open Default Shell in View`. This modular organisatoion of our workspace allows us to have the script or the main text on the left and the console on the right. **Note** that Sublime has many options to customize your workspace. Just play around with the `View` settings to see what you can get out of it.
+5. Go `Tools > Layout > Columns: 2`. This command splits the Sublime main windows into two parts. Move the cursor on the right column, open the command palette `Tools > Command Palette` and select `Terminus: Open Default Shell in View`. This modular organisatoion of our workspace allows us to have the script or the main text on the left and the console (Terminus) on the right. **Note** You can further customize your workspace playing around with the `View` settings.
 
     ![Sublime main windows organised in 2 columns](https://raw.githubusercontent.com/albertostefanelli/academic_website/master/static/img/sublime.png)
 
@@ -108,7 +108,7 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
 11. Fine tuning **(Optional)**
     1. Install rtichoke to get an improved console for R with multiline editing and rich syntax highlight. Follow the instructions on the [rtichoke GitHub page](https://github.com/randy3k/rtichoke). Remember to type in Terminus (or in your bash terminal) `rtichoke` instead of `r`.  
     2. Install [MarkdownEditing](https://packagecontrol.io/packages/MarkdownEditing) or [MarkdownComplements](https://packagecontrol.io/packages/MarkdownComplements) for better Markdown support such as lists and tables.
-    3. Install a Git plug-in from the Package Control (point n2) such as [this one](https://github.com/kemayo/sublime-text-git).
+    3. Install a Git plug-in from the Package Control (point 2) such as [this one](https://github.com/kemayo/sublime-text-git).
     4. Tune R-IDE for a better writing experience. Create a file called `R Markdown.sublime-settings` in `/Sublime Text 3/Packages/User` and paste the following code. 
     
         ```JSON
@@ -175,7 +175,7 @@ Your Sublime Text set up is ready! Take your time to understand how it works and
 
 If you have any question or suggestion about this guide, do not hesitate to contact me! 
 
-**Enjoy Sublime and R-IDE and happy writing.**
+**Enjoy Sublime/R-IDE and happy writing.**
 
 
 
