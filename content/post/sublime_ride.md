@@ -60,9 +60,9 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
     install.packages("languageserver")
     ```
 
-6. Set up SendCode to use Terminus, `Tools > Command Palette > SendCode: Choose Program` and select `Terminus`. If you don't like to have a console in your working environment you can send your code to an external program such as R-GUI, R-Studio, or your default shell terminal. Even if it is not necessary, I strongly advise to install and use `rtichoke` as r terminal (see point 11 below).
+7. Set up SendCode to use Terminus, `Tools > Command Palette > SendCode: Choose Program` and select `Terminus`. If you don't like to have a console in your working environment you can send your code to an external program such as R-GUI, R-Studio, or your default shell terminal. Even if it is not necessary, I strongly advise to install and use `rtichoke` as r terminal (see point 11 below).
 
-7. Set up Citer. Go to `Sublime Text > Preferences > Package Settings > Citer` and paste the following code in setting widows that just opened. Change the bibtex_file_path. You can obtain a .bib file using your favourite citation manager (such as Zotero or Mendeley). 
+8. Set up Citer. Go to `Sublime Text > Preferences > Package Settings > Citer` and paste the following code in setting widows that just opened. Change the bibtex_file_path. You can obtain a .bib file using your favourite citation manager (such as Zotero or Mendeley). 
 
     ```JSON
     {
@@ -89,23 +89,25 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
     }
     ```
 
-8. Enable the Language Server Protocol. Go to `Tools > Command Palette` and select `LPS: Enable Language Server`. You can choose to enable it globally or just for a single project. 
+9. Enable the Language Server Protocol. Go to `Tools > Command Palette` and select `LPS: Enable Language Server`. You can choose to enable it globally or just for a single project. 
 
-9. If you have followed the instructions carefully you should have an empty document `untitled` on the left part of the screen and your Terminus console with R open on the right. Paste in the empty document the code here under (or open your own R script). Click on the bottom right corner and select R as a language syntax (if you opened your own .R script it should be already correctly set). You can now send the code to Terminus selecting `R-IDE > Send Code`. Alternatively, you can send code also using the keys combination `command+return` on MacOs or `control+return` on Window (same as R-Studio).
-**NB:** If you do not see the R-IDE menu or SendCode is not working properly (nothing appears in the terminal on the right when you send the code), check the previous steps and/or quit and re-open Sublime. 
+10. Your set up is completed meaning that we are almost done. Let's see how to use Sublime/R-IDE to run some code or knit a PDF. 
 
-    ```R 
-    # A comment: this is a sample script to try out Sublime and SendCode functionalities. 
-    y=c(12,15,28,17,18)
-    x=c(22,39,50,25,18)
-    mean(y)
-    mean(x)
-    plot(x,y)
-    ```
+    1. If you have followed the instructions carefully you should have an empty document `untitled` on the left part of the screen and your Terminus console with R open on the right. Paste in the empty document the code here under (or open your own R script). Click on the bottom right corner and select R as a language syntax (if you opened your own .R script it should be already correctly set). You can now send the code to Terminus selecting `R-IDE > Send Code`. Alternatively, you can send code also using the keys combination `command+return` on MacOs or `control+return` on Window (same as R-Studio).**NB:** If you do not see the R-IDE menu or SendCode is not working properly (nothing appears in the terminal on the right when you send the code), check the previous steps and/or quit and re-open Sublime. 
 
-10. Open another Sublime instance and an R-Markdown file of your choice (.rmd). If you don't have one ready yet you can use [this draft template](https://github.com/albertostefanelli/rmarkdown_templates) hosted on my GitHub. Now you can either knit (compile) the document in different formats changing the YALM meta data or try out any portions of the R code embedded in your .rmd file following step 5 and step 9. To kint the document go to `Tools > Build With` and select from the prompt R-Markdown or use the shortcut `command+b` on MacOs or `control+b` on Window to directly knit the file with the default compiler. 
 
-11. Fine tuning **(Optional)**
+        ```R 
+        # A comment: this is a sample script to try out Sublime and SendCode functionalities. 
+        y=c(12,15,28,17,18)
+        x=c(22,39,50,25,18)
+        mean(y)
+        mean(x)
+        plot(x,y)
+        ```
+
+    2. Open another Sublime instance and an R-Markdown file of your choice (.rmd). If you don't have one ready yet you can use [this draft template](https://github.com/albertostefanelli/rmarkdown_templates) hosted on my GitHub. Now you can either knit (compile) the document in different formats changing the YALM meta data or try out any portions of the R code embedded in your .rmd file following step 5 and step 9. To kint the document go to `Tools > Build With` and select from the prompt R-Markdown or use the shortcut `command+b` on MacOs or `control+b` on Window to directly knit the file with the default compiler. 
+
+12. Fine tuning **(Optional)**
     1. Install rtichoke to get an improved console for R with multiline editing and rich syntax highlight. Follow the instructions on the [rtichoke GitHub page](https://github.com/randy3k/rtichoke). Remember to type in Terminus (or in your bash terminal) `rtichoke` instead of `r`.  
     2. Install [MarkdownEditing](https://packagecontrol.io/packages/MarkdownEditing) or [MarkdownComplements](https://packagecontrol.io/packages/MarkdownComplements) for better Markdown support such as lists and tables.
     3. Install a Git plug-in from the Package Control (point 2) such as [this one](https://github.com/kemayo/sublime-text-git).
