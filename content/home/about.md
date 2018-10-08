@@ -26,6 +26,10 @@ weight = 5
   institution = " KU Leuven, Leuven, Belgium"
 
 [[education.courses]]
+  course = "MS in Statistics"
+  institution = " KU Leuven, Leuven, Belgium"
+
+[[education.courses]]
   course = "MA in Political Science"
   institution = "Central European University, Budapest, Hungary"
   year = 2018
