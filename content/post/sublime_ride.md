@@ -51,7 +51,7 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
 
 5. Go `Tools > Layout > Columns: 2`. This command splits the Sublime main windows into two parts. Move the cursor on the right column, open the command palette `Tools > Command Palette` and select `Terminus: Open Default Shell in View`. This modular organisatoion of our workspace allows us to have the script or the main text on the left and the console on the right. **Note** that Sublime has many options to customize your workspace. Just play around with the `View` settings to see what you can get out of it.
 
-![Sublime main windows organised in 2 columns](https://raw.githubusercontent.com/albertostefanelli/academic_website/master/static/img/sublime.png)
+[Sublime main windows organised in 2 columns](https://raw.githubusercontent.com/albertostefanelli/academic_website/master/static/img/sublime.png)
 
 6. Install the R package [`languageserver`](https://github.com/REditorSupport/languageserver) from CRAN. You can type `R` in the console that you just open in the right column of your Sublime Text. **NB**: R (and R-GUI) is different from R-Studio and they do not share the same package library. If you commonly use R-Studio and you switch to base R, remember to install the CRAN packages that you want to use. 
 
