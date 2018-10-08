@@ -17,7 +17,7 @@ weight = 60
 
 **I have served as Teaching Assistant for the following courses:**
 
-+ Atomated Collection of Web and Social Data (Pablo Barberá, Summer 2018, ECPR)
++ Automated Collection of Web and Social Data (Pablo Barberá, Summer 2018, ECPR)
 
 + R Basics (Akos Mate, Summer 2018, ECPR)
 

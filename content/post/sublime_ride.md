@@ -12,7 +12,7 @@ summary = "Set up a beautifully simple multi purpose working suite in under 10 m
 A couple of months ago, I was looking for an alternative to LaTex to easily write multi format articles and technical reports in a nicely formatted way. The natural choice would be the excellent R-Studio suite with RMarkdown and its new Radix framework. Although R-Studio is a good choice for small reports, it lacks most of the features of a modern writing suite making the act of writing extremely annoying. I run into Sublime thanks to this [nice blog post](https://akosm.netlify.com/post/using-r-markdown-to-write-papers-that-look-seriously-nice/) by Akos Mate and I decided to give it a try. After more than two months of intensive usage, I can undobtely say that Sublime is the clear winner among all its competitors (Latex, R-Studio, Atom, Vim).  
  
 
-### Save time and energy: the “One Text Editor - All the tasks” approach.
+### Save time and energy: the “One Text Editor - All the tasks” approach
 
  Sublime is a free (but unfortunately closed source) multi-syntax text editor. Its strength resides in its easy and accessible Python architecture that allows users to write third-part plugins that enhance its basic functionalities and add new features. Thanks to its extreme versatility, its very active community developed series of plug-ins that transform Sublime in a perfect muti-purpose programming and writing tool.
 
@@ -50,6 +50,8 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
 4. Shutdown Sublime completely and re-open it. 
 
 5. Go `Tools > Layout > Columns: 2`. This command splits the Sublime main windows into two parts. Move the cursor on the right column, open the command palette `Tools > Command Palette` and select `Terminus: Open Default Shell in View`. This modular organisatoion of our workspace allows us to have the script or the main text on the left and the console on the right. **Note** that Sublime has many options to customize your workspace. Just play around with the `View` settings to see what you can get out of it.
+
+![Sublime main windows splitted in 2 columns](sublime.jpg)
 
 6. Install the R package [`languageserver`](https://github.com/REditorSupport/languageserver) from CRAN. You can type `R` in the console that you just open in the right column of your Sublime Text. **NB**: R (and R-GUI) is different from R-Studio and they do not share the same package library. If you commonly use R-Studio and you switch to base R, remember to install the CRAN packages that you want to use. 
 
