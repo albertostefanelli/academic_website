@@ -23,8 +23,8 @@ weight = 60
 
 + Text Mining Boot Camp (ITI Project, Srpint 2018, Central European University)
 
-+ Regression Refresher (Levi Levente, Winter 2018, ECPR)
++ Regression Refresher (Levente (Levi) Littvay, Winter 2018, ECPR)
 
-+ Experimental Political Science (Levi Levente, Winter 2018, Central European University)
++ Experimental Political Science (Levente (Levi) Littvay, Winter 2018, Central European University)
 
 + Text Analysis Across Discipline (ITI Project, Fall 2017, Central European University)

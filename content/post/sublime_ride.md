@@ -107,7 +107,7 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
 
     2. Open another Sublime instance and an R-Markdown file of your choice (.rmd). If you don't have one ready yet you can use [this draft template](https://github.com/albertostefanelli/rmarkdown_templates) hosted on my GitHub. Now you can either knit (compile) the document in different formats changing the YALM meta data or try out any portions of the R code embedded in your .rmd file following step 5 and step 9. To kint the document go to `Tools > Build With` and select from the prompt R-Markdown or use the shortcut `command+b` on MacOs or `control+b` on Window to directly knit the file with the default compiler. 
 
-12. Fine tuning **(Optional)**
+11. Fine tuning **(Optional)**
     1. Install rtichoke to get an improved console for R with multiline editing and rich syntax highlight. Follow the instructions on the [rtichoke GitHub page](https://github.com/randy3k/rtichoke). Remember to type in Terminus (or in your bash terminal) `rtichoke` instead of `r`.  
     2. Install [MarkdownEditing](https://packagecontrol.io/packages/MarkdownEditing) or [MarkdownComplements](https://packagecontrol.io/packages/MarkdownComplements) for better Markdown support such as lists and tables.
     3. Install a Git plug-in from the Package Control (point 2) such as [this one](https://github.com/kemayo/sublime-text-git).
