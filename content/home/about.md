@@ -43,13 +43,13 @@ weight = 5
 
 # Biography
 
-I am a PhD candidate at the the [Institute for Social and Political Opinion Research (ISPO)](https://soc.kuleuven.be/ceso/ispo), KU Leuven, Belgium. My PhD is on Political Radicalization in Ethnic Minorities’, Views on Western Society, Liberal Values, and Politics. 
+I am a PhD candidate at the the [Institute for Social and Political Opinion Research (ISPO)](https://soc.kuleuven.be/ceso/ispo), KU Leuven, Belgium. My PhD is on Political Radicalization in Ethnic Minorities, Views on Western Society, Liberal Values, and Politics. 
 
 
-More in general, my research interests are mostly within the filed of voting behaviour, party finance, and political communication. Methods wise, I am particularly interested in graphical causal models, machine learning algorithms, text analysis, and big data. 
+More generally, my research interests are mostly within the filed of voting behaviour, party finance, and political communication. Methods wise, I am particularly interested in graphical causal models, machine learning algorithms, text analysis, and big data. 
 
-I am member of the survey and experimental teams of [Team Populism](http://www.teampopulism.com/), a research group that brings together renowned scholars from Europe and the Americas to study the causes and consequences of populism.
+I am a member of the survey and experimental teams of [Team Populism](http://www.teampopulism.com/), a research group that brings together renowned scholars from Europe and the Americas to study the causes and consequences of populism.
 
-Concerning the private sector, I am currently external consultant and analyst for [ZK Analytics](http://www.zkanalytics.com/) and for the [European Consortium for Political Research (Methods Schools)](https://ecpr.eu/Events/EventTypeDetails.aspx?EventTypeID=5). 
+Concerning the private sector, I am an currently external consultant and analyst for [ZK Analytics](http://www.zkanalytics.com/) and for the [European Consortium for Political Research (Methods Schools)](https://ecpr.eu/Events/EventTypeDetails.aspx?EventTypeID=5). 
 
 I love cooking, films, games, reading about tech stuff, and programming. Huge Linux/Unix fan boy.

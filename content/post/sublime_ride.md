@@ -9,12 +9,12 @@ summary = "Set up a beautifully simple multi purpose working suite in under 10 m
 
 
 
-A couple of months ago, I was looking for an alternative to LaTex to easily write multi format articles and technical reports in a nicely formatted way. The natural choice would be the excellent R-Studio suite with RMarkdown and its new Radix framework. Although R-Studio is a good choice for small reports, it lacks most of the features of a modern writing suite making the act of writing extremely annoying. I run into Sublime thanks to this [nice blog post](https://akosm.netlify.com/post/using-r-markdown-to-write-papers-that-look-seriously-nice/) by Akos Mate and I decided to give it a try. After more than two months of intensive usage, I can undobtely say that Sublime is the clear winner among all its competitors (Latex, R-Studio, Atom, Vim).  
+A couple of months ago, I was looking for an alternative to LaTex to easily write multi format articles and technical reports in a nicely formatted way. The natural choice would be the excellent R-Studio suite with RMarkdown and its new Radix framework. Although R-Studio is a good choice for small reports, it lacks most of the features of a modern writing suite, making the act of writing extremely annoying. I ran into Sublime thanks to this [nice blog post](https://akosm.netlify.com/post/using-r-markdown-to-write-papers-that-look-seriously-nice/) by Akos Mate and I decided to give it a try. After more than two months of intensive use, I can undoubtedly say that Sublime is the clear winner among all its competitors (Latex, R-Studio, Atom, Vim).  
  
 
 ### Save time and energy: the “One Text Editor - All the tasks” approach
 
- Sublime is a free (but unfortunately closed source) multi-syntax text editor. Its strength resides in its easy and accessible Python architecture that allows users to write third-part plugins that enhance its basic functionalities and add new features. Thanks to its extreme versatility, its very active community developed a series of plug-ins that transform Sublime in a perfect muti-purpose programming and writing tool.
+ Sublime is a free (but unfortunately closed source) multi-syntax text editor. Its strength resides in its easy and accessible Python architecture that allows users to write third-part plug-ins that enhance its basic functionalities and add new features. Thanks to its extreme versatility, its very active community developed a series of plug-ins that transform Sublime in a perfect multi-purpose programming and writing tool.
 
 |                                                                      | LaTex (basic)     | R-Markdown (R-Studio)    | Sublime     |
 |:------------------------------------------------------------------|---------------:    |------------:            |---------:    |
@@ -29,7 +29,7 @@ A couple of months ago, I was looking for an alternative to LaTex to easily writ
 
 Table: Some features comparison between LaTex, R-Studio, and Sublime
 
-With some minimal tuning, you can have all the advantages of a modern text suit without losing the integration with R-Studio and Pandoc. In other words, you can use Sublime as your main working tool to program, update websites or repositories, and writing scientific papers, small and large technical reports, blog posts, or even newspaper articles. Bear in mind that a basic knowledge of R, R-Markdown and shell console is required. 
+With some minimal tuning, you can have all the advantages of a modern text suit without losing the integration with R-Studio and Pandoc. In other words, you can use Sublime as your main working tool to program, update websites or repositories, and write scientific papers, small and large technical reports, blog posts, or even newspaper articles. Bear in mind that a basic knowledge of R, R-Markdown and shell console is required. 
 
 ### What I need to start: 10 easy steps
 
@@ -91,7 +91,7 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
 
 9. Enable the Language Server Protocol. Go to `Tools > Command Palette` and select `LPS: Enable Language Server`. You can choose to enable it globally or just for a single project. 
 
-10. Your set up is completed meaning that we are almost done. Let's see how to use Sublime/R-IDE to run some code or knit a PDF. 
+10. Your setup is completed meaning that we are almost done. Let's see how to use Sublime/R-IDE to run some code or knit a PDF. 
 
     1. If you have followed the instructions carefully you should have an empty document `untitled` on the left part of the screen and your Terminus console with R open on the right. Paste in the empty document the code here under (or open your own R script). Click on the bottom right corner and select R as a language syntax (if you opened your own .R script it should be already correctly set). You can now send the code to Terminus selecting `R-IDE > Send Code`. Alternatively, you can send code also using the keys combination `command+return` on MacOs or `control+return` on Window (same as R-Studio).**NB:** If you do not see the R-IDE menu or SendCode is not working properly (nothing appears in the terminal on the right when you send the code), check the previous steps and/or quit and re-open Sublime. 
 
@@ -173,9 +173,9 @@ With some minimal tuning, you can have all the advantages of a modern text suit 
 
 ### What now?
 
-Your Sublime Text set up is ready! Take your time to understand how it works and to customize it according to your needs. 
+Your Sublime Text setup is ready! Take your time to understand how it works and to customize it according to your needs. 
 
-If you have any question or suggestion about this guide, do not hesitate to contact me! 
+If you have any questions or suggestions about this guide, do not hesitate to contact me! 
 
 **Enjoy Sublime/R-IDE and happy writing.**
 
