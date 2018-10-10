@@ -20,7 +20,7 @@ A couple of months ago, I was looking for an alternative to LaTex to easily writ
 |:------------------------------------------------------------------|---------------:    |------------:            |---------:    |
 | Multi syntax                                                         | No                | Partially              | Yes         |
 | Native multi format output                                           | No                | Yes                    | Yes         |
-| Easy integration with R or Python engines                            | No                | Only R                 | Yes         |
+| Easy integration with R or Python engines                            | No                | Yes                 | Yes         |
 | Auto-complete citations                                              | No                | No                     | Yes         |
 | GitHub support                                                       | No                | Partially              | Yes         |
 | Project management features                                         | No                | Yes                    | Yes         |
