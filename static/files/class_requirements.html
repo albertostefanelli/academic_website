@@ -1717,349 +1717,367 @@ If you need any help, please contact me (<a href="mailto:alberto.stefanelli@kule
 <span id="cb4-6"><a href="#cb4-6"></a><span class="kw">library</span>(devtools)</span>
 <span id="cb4-7"><a href="#cb4-7"></a><span class="kw">install_github</span>(<span class="st">&quot;albertostefanelli/cjoint&quot;</span>)</span>
 <span id="cb4-8"><a href="#cb4-8"></a></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">##### OPTION 2 - Install a modified directly from the script #####</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># OPTION 2 - Install a mondify script</span></span>
 <span id="cb4-10"><a href="#cb4-10"></a></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">###########################</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># read R data frame previously imported from qualtRics</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">###########################</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a></span>
-<span id="cb4-15"><a href="#cb4-15"></a>read.df.qualtRics  &lt;-<span class="st"> </span><span class="cf">function</span>(filename,<span class="dt">responses=</span><span class="ot">NULL</span>,<span class="dt">covariates =</span> <span class="ot">NULL</span>,<span class="dt">respondentID =</span> <span class="ot">NULL</span>,<span class="dt">letter=</span><span class="st">&quot;F&quot;</span>,<span class="dt">new.format =</span> <span class="ot">FALSE</span>,<span class="dt">ranks =</span> <span class="ot">NULL</span>){</span>
-<span id="cb4-16"><a href="#cb4-16"></a>  <span class="co"># Load CSV Results</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a>  qualtrics_results &lt;-<span class="st"> </span>filename</span>
-<span id="cb4-18"><a href="#cb4-18"></a>  qualtrics_results &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(qualtrics_results)</span>
-<span id="cb4-19"><a href="#cb4-19"></a>  <span class="co"># Replace all . with -</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a>  replace.regexp &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;.[0-9]+.[0-9]+$&quot;</span>)</span>
-<span id="cb4-21"><a href="#cb4-21"></a>  replace.col &lt;-<span class="st"> </span><span class="kw">grep</span>(replace.regexp, <span class="kw">colnames</span>(filename))</span>
-<span id="cb4-22"><a href="#cb4-22"></a>  <span class="kw">colnames</span>(qualtrics_results)[replace.col] &lt;-</span>
-<span id="cb4-23"><a href="#cb4-23"></a><span class="st">    </span><span class="kw">gsub</span>(<span class="st">&quot;[.]&quot;</span>,<span class="st">&quot;-&quot;</span>,<span class="kw">colnames</span>(qualtrics_results)[replace.col])</span>
-<span id="cb4-24"><a href="#cb4-24"></a>  </span>
-<span id="cb4-25"><a href="#cb4-25"></a>  replace.regexp &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;.[0-9]+.[0-9]+.[0-9]+$&quot;</span>)</span>
-<span id="cb4-26"><a href="#cb4-26"></a>  replace.col &lt;-<span class="st"> </span><span class="kw">grep</span>(replace.regexp, <span class="kw">colnames</span>(filename))</span>
-<span id="cb4-27"><a href="#cb4-27"></a>  <span class="kw">colnames</span>(qualtrics_results)[replace.col] &lt;-</span>
-<span id="cb4-28"><a href="#cb4-28"></a><span class="st">    </span><span class="kw">gsub</span>(<span class="st">&quot;[.]&quot;</span>,<span class="st">&quot;-&quot;</span>,<span class="kw">colnames</span>(qualtrics_results)[replace.col])</span>
-<span id="cb4-29"><a href="#cb4-29"></a>  </span>
-<span id="cb4-30"><a href="#cb4-30"></a><span class="co"># Extract variable names/question names</span></span>
-<span id="cb4-31"><a href="#cb4-31"></a>  var_names &lt;-<span class="st"> </span><span class="kw">names</span>(qualtrics_results)</span>
-<span id="cb4-32"><a href="#cb4-32"></a>  q_names &lt;-<span class="st"> </span><span class="kw">names</span>(qualtrics_results)</span>
-<span id="cb4-33"><a href="#cb4-33"></a>  <span class="co"># The rest is the raw data</span></span>
-<span id="cb4-34"><a href="#cb4-34"></a>  qualtrics_data &lt;-<span class="st"> </span>qualtrics_results</span>
-<span id="cb4-35"><a href="#cb4-35"></a>  <span class="kw">colnames</span>(qualtrics_data) &lt;-<span class="st"> </span>var_names</span>
-<span id="cb4-36"><a href="#cb4-36"></a>  <span class="co"># Make respondent index</span></span>
-<span id="cb4-37"><a href="#cb4-37"></a>  respondent_index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(qualtrics_data)</span>
-<span id="cb4-38"><a href="#cb4-38"></a>  </span>
-<span id="cb4-39"><a href="#cb4-39"></a>  <span class="co"># Find the attribute names and number of tasks</span></span>
-<span id="cb4-40"><a href="#cb4-40"></a>  attr_regexp &lt;-<span class="st">  </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;-[0-9]+-[0-9]+(?!-)&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb4-41"><a href="#cb4-41"></a>  attr_name_cols &lt;-<span class="st"> </span><span class="kw">grep</span>(attr_regexp, var_names, <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
-<span id="cb4-42"><a href="#cb4-42"></a>  <span class="co"># remove trailing whitespace</span></span>
-<span id="cb4-43"><a href="#cb4-43"></a>  qualtrics_data[attr_name_cols] &lt;-<span class="st"> </span><span class="kw">lapply</span>(qualtrics_data[attr_name_cols], <span class="cf">function</span> (x) <span class="kw">sub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">s+$&quot;</span>, <span class="st">&quot;&quot;</span>, x))</span>
-<span id="cb4-44"><a href="#cb4-44"></a>  <span class="co"># Parse to matrix</span></span>
-<span id="cb4-45"><a href="#cb4-45"></a>  attr_name_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(var_names[attr_name_cols],<span class="st">&quot;-&quot;</span>)),<span class="dt">nrow=</span><span class="dv">3</span>,<span class="dt">ncol=</span><span class="kw">length</span>(attr_name_cols))</span>
-<span id="cb4-46"><a href="#cb4-46"></a>  <span class="kw">colnames</span>(attr_name_matrix) &lt;-<span class="st"> </span>var_names[attr_name_cols]</span>
-<span id="cb4-47"><a href="#cb4-47"></a>  attr_name_matrix &lt;-<span class="st"> </span>attr_name_matrix[<span class="dv">2</span><span class="op">:</span><span class="kw">nrow</span>(attr_name_matrix),]</span>
-<span id="cb4-48"><a href="#cb4-48"></a>  attr_name_matrix &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(attr_name_matrix))</span>
-<span id="cb4-49"><a href="#cb4-49"></a>  </span>
-<span id="cb4-50"><a href="#cb4-50"></a>  num_tasks &lt;-<span class="kw">unique</span>(<span class="kw">as.integer</span>(attr_name_matrix[,<span class="dv">1</span>]))</span>
-<span id="cb4-51"><a href="#cb4-51"></a>  </span>
-<span id="cb4-52"><a href="#cb4-52"></a>  <span class="co"># Find the level names and number of profiles</span></span>
-<span id="cb4-53"><a href="#cb4-53"></a>  level_regexp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;-[0-9]+-[0-9]+-[0-9]+&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb4-54"><a href="#cb4-54"></a>  level_name_cols &lt;-<span class="st"> </span><span class="kw">grep</span>(level_regexp, var_names, <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
-<span id="cb4-55"><a href="#cb4-55"></a>  num_profiles &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">do.call</span>(rbind,<span class="kw">strsplit</span>(var_names[level_name_cols],<span class="st">&quot;-&quot;</span>))[,<span class="dv">3</span>]))</span>
-<span id="cb4-56"><a href="#cb4-56"></a>  </span>
-<span id="cb4-57"><a href="#cb4-57"></a>  <span class="co"># Convert to matrix</span></span>
-<span id="cb4-58"><a href="#cb4-58"></a>  level_name_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(var_names[level_name_cols],<span class="st">&quot;-&quot;</span>)),<span class="dt">nrow=</span><span class="dv">4</span>,<span class="dt">ncol=</span><span class="kw">length</span>(level_name_cols))</span>
-<span id="cb4-59"><a href="#cb4-59"></a>  <span class="kw">colnames</span>(level_name_matrix) &lt;-<span class="st"> </span>var_names[level_name_cols]</span>
-<span id="cb4-60"><a href="#cb4-60"></a>  level_name_matrix &lt;-<span class="st"> </span>level_name_matrix[<span class="dv">2</span><span class="op">:</span><span class="kw">nrow</span>(level_name_matrix),]</span>
-<span id="cb4-61"><a href="#cb4-61"></a>  level_name_matrix &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(level_name_matrix))</span>
-<span id="cb4-62"><a href="#cb4-62"></a>  </span>
-<span id="cb4-63"><a href="#cb4-63"></a>  <span class="co"># Unique attributes</span></span>
-<span id="cb4-64"><a href="#cb4-64"></a>  all_attr &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
-<span id="cb4-65"><a href="#cb4-65"></a>  <span class="cf">for</span> (attr_vec <span class="cf">in</span> attr_name_cols) {</span>
-<span id="cb4-66"><a href="#cb4-66"></a>    all_attr &lt;-<span class="st"> </span><span class="kw">c</span>(all_attr,qualtrics_data[,attr_vec])</span>
-<span id="cb4-67"><a href="#cb4-67"></a>  }</span>
-<span id="cb4-68"><a href="#cb4-68"></a>  <span class="co">## Remove any trailing white spaces in strings</span></span>
-<span id="cb4-69"><a href="#cb4-69"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(all_attr)){</span>
-<span id="cb4-70"><a href="#cb4-70"></a>  all_attr[[i]] &lt;-<span class="st"> </span><span class="kw">trimws</span>(all_attr[[i]])</span>
-<span id="cb4-71"><a href="#cb4-71"></a>  }</span>
-<span id="cb4-72"><a href="#cb4-72"></a></span>
-<span id="cb4-73"><a href="#cb4-73"></a>  <span class="co">#all_attr &lt;- gsub(pattern = &quot;\\s+$&quot;, replacement = &quot;&quot;, all_attr)</span></span>
-<span id="cb4-74"><a href="#cb4-74"></a>  <span class="co">#no missing values</span></span>
-<span id="cb4-75"><a href="#cb4-75"></a>  unique_attr &lt;-<span class="st"> </span><span class="kw">unique</span>(all_attr)[<span class="kw">nchar</span>(<span class="kw">unique</span>(all_attr)) <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>]</span>
-<span id="cb4-76"><a href="#cb4-76"></a>  <span class="co">#and no na&#39;s</span></span>
-<span id="cb4-77"><a href="#cb4-77"></a>  unique_attr &lt;-<span class="st"> </span>unique_attr[<span class="op">!</span><span class="kw">is.na</span>(unique_attr)]</span>
-<span id="cb4-78"><a href="#cb4-78"></a>  </span>
-<span id="cb4-79"><a href="#cb4-79"></a>  <span class="co">####### Checks on input</span></span>
-<span id="cb4-80"><a href="#cb4-80"></a>  </span>
-<span id="cb4-81"><a href="#cb4-81"></a>  <span class="co"># Are there any responses or ranks</span></span>
-<span id="cb4-82"><a href="#cb4-82"></a>  <span class="cf">if</span> (<span class="kw">is.null</span>(responses) <span class="op">&amp;</span><span class="st"> </span><span class="kw">is.null</span>(ranks)) {</span>
-<span id="cb4-83"><a href="#cb4-83"></a>    <span class="kw">stop</span>(<span class="st">&quot;Either responses or ranks must be non-NULL&quot;</span>)</span>
-<span id="cb4-84"><a href="#cb4-84"></a>    <span class="kw">return</span>(<span class="ot">NULL</span>)</span>
-<span id="cb4-85"><a href="#cb4-85"></a>  }</span>
-<span id="cb4-86"><a href="#cb4-86"></a>  </span>
-<span id="cb4-87"><a href="#cb4-87"></a>  <span class="co"># If there are responses, are there the right number?</span></span>
-<span id="cb4-88"><a href="#cb4-88"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(responses) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">length</span>(num_tasks) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(responses)) {</span>
-<span id="cb4-89"><a href="#cb4-89"></a>    <span class="co"># If number of responses doesn&#39;t match num_tasks</span></span>
-<span id="cb4-90"><a href="#cb4-90"></a>    <span class="kw">stop</span>(<span class="st">&quot;Error: Number of response columns doesn&#39;t equal number of tasks in data&quot;</span>)</span>
-<span id="cb4-91"><a href="#cb4-91"></a>    <span class="kw">return</span>(<span class="ot">NULL</span>)</span>
-<span id="cb4-92"><a href="#cb4-92"></a>  }</span>
-<span id="cb4-93"><a href="#cb4-93"></a>  </span>
-<span id="cb4-94"><a href="#cb4-94"></a>  <span class="co"># If there are ranks, are there the right number?</span></span>
-<span id="cb4-95"><a href="#cb4-95"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(ranks) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">length</span>(num_tasks) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(ranks)<span class="op">/</span>num_profiles) {</span>
-<span id="cb4-96"><a href="#cb4-96"></a>    <span class="co"># If number of ranks doesn&#39;t match num_tasks</span></span>
-<span id="cb4-97"><a href="#cb4-97"></a>    <span class="kw">stop</span>(<span class="st">&quot;Error: Number of rank columns doesn&#39;t equal number of tasks times number of profiles in data&quot;</span>)</span>
-<span id="cb4-98"><a href="#cb4-98"></a>    <span class="kw">return</span>(<span class="ot">NULL</span>)</span>
-<span id="cb4-99"><a href="#cb4-99"></a>  }</span>
-<span id="cb4-100"><a href="#cb4-100"></a>  </span>
-<span id="cb4-101"><a href="#cb4-101"></a>  <span class="co"># If no attributes fit the description</span></span>
-<span id="cb4-102"><a href="#cb4-102"></a>  <span class="cf">if</span> (<span class="kw">length</span>(attr_name_cols) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</span>
-<span id="cb4-103"><a href="#cb4-103"></a>    <span class="kw">stop</span>(<span class="st">&quot;Error: Cannot find any columns designating attributes and levels. Please make sure the input file originated from a Qualtrics survey designed using the Conjoint SDT&quot;</span>)</span>
-<span id="cb4-104"><a href="#cb4-104"></a>    <span class="kw">return</span>(<span class="ot">NULL</span>)</span>
-<span id="cb4-105"><a href="#cb4-105"></a>  }</span>
-<span id="cb4-106"><a href="#cb4-106"></a>  </span>
-<span id="cb4-107"><a href="#cb4-107"></a>  <span class="co"># Check whether attribute columns are empty or not</span></span>
-<span id="cb4-108"><a href="#cb4-108"></a>  <span class="cf">for</span> (attr_column <span class="cf">in</span> attr_name_cols) { </span>
-<span id="cb4-109"><a href="#cb4-109"></a>    <span class="cf">if</span> (<span class="kw">is.null</span>(<span class="kw">unique</span>(qualtrics_data[,attr_column]))) {</span>
-<span id="cb4-110"><a href="#cb4-110"></a>      <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Error, attribute column &quot;</span>, var_names[attr_column], <span class="st">&quot; has no attribute names - recommend deleting this column&quot;</span>))</span>
-<span id="cb4-111"><a href="#cb4-111"></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">unique</span>(qualtrics_data[,attr_column])[<span class="dv">1</span>] <span class="op">==</span><span class="st"> &quot;&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(qualtrics_data[,attr_column])) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {</span>
-<span id="cb4-112"><a href="#cb4-112"></a>      <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Error, attribute column &quot;</span>, var_names[attr_column], <span class="st">&quot; has no attribute names - recommend deleting this column&quot;</span>))</span>
-<span id="cb4-113"><a href="#cb4-113"></a>    }</span>
-<span id="cb4-114"><a href="#cb4-114"></a>  }</span>
-<span id="cb4-115"><a href="#cb4-115"></a>  </span>
-<span id="cb4-116"><a href="#cb4-116"></a>  <span class="co"># Check whether level columns are empty or not</span></span>
-<span id="cb4-117"><a href="#cb4-117"></a>  <span class="cf">for</span> (lev_column <span class="cf">in</span> level_name_cols) {</span>
-<span id="cb4-118"><a href="#cb4-118"></a>    <span class="cf">if</span> (<span class="kw">is.null</span>(<span class="kw">unique</span>(qualtrics_data[,lev_column]))) {</span>
-<span id="cb4-119"><a href="#cb4-119"></a>      <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Error, level column &quot;</span>, var_names[lev_column], <span class="st">&quot; has no attribute names - recommend deleting this column&quot;</span>))</span>
-<span id="cb4-120"><a href="#cb4-120"></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">unique</span>(qualtrics_data[,lev_column])[<span class="dv">1</span>] <span class="op">==</span><span class="st"> &quot;&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(qualtrics_data[,lev_column])) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {</span>
-<span id="cb4-121"><a href="#cb4-121"></a>      <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Error, level column &quot;</span>, var_names[lev_column], <span class="st">&quot; has no attribute names - recommend deleting this column&quot;</span>))</span>
-<span id="cb4-122"><a href="#cb4-122"></a>    }</span>
-<span id="cb4-123"><a href="#cb4-123"></a>  }  </span>
-<span id="cb4-124"><a href="#cb4-124"></a>  </span>
-<span id="cb4-125"><a href="#cb4-125"></a>  </span>
-<span id="cb4-126"><a href="#cb4-126"></a>  <span class="co"># If respondentID is not null</span></span>
-<span id="cb4-127"><a href="#cb4-127"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(respondentID)){</span>
-<span id="cb4-128"><a href="#cb4-128"></a>    respondent_index &lt;-<span class="st"> </span>qualtrics_data[,<span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>respondentID)]</span>
-<span id="cb4-129"><a href="#cb4-129"></a>    </span>
-<span id="cb4-130"><a href="#cb4-130"></a>  }<span class="cf">else</span>{</span>
-<span id="cb4-131"><a href="#cb4-131"></a>    respondent_index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(qualtrics_data)</span>
-<span id="cb4-132"><a href="#cb4-132"></a>  }</span>
-<span id="cb4-133"><a href="#cb4-133"></a>  </span>
-<span id="cb4-134"><a href="#cb4-134"></a>  <span class="co"># Get the response rows</span></span>
-<span id="cb4-135"><a href="#cb4-135"></a>  <span class="cf">if</span> (<span class="kw">is.character</span>(responses[<span class="dv">1</span>])){</span>
-<span id="cb4-136"><a href="#cb4-136"></a>    response_vars &lt;-<span class="st"> </span><span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>responses)</span>
-<span id="cb4-137"><a href="#cb4-137"></a>  }<span class="cf">else</span>{</span>
-<span id="cb4-138"><a href="#cb4-138"></a>    response_vars &lt;-<span class="st"> </span>responses</span>
-<span id="cb4-139"><a href="#cb4-139"></a>  }</span>
-<span id="cb4-140"><a href="#cb4-140"></a>  </span>
-<span id="cb4-141"><a href="#cb4-141"></a><span class="kw">grepl</span>(<span class="st">&quot;[</span><span class="ch">\\</span><span class="st">&#39;</span><span class="ch">\&quot;</span><span class="st">]&quot;</span>,<span class="kw">unlist</span>(<span class="kw">unique</span>(all_attr)))</span>
-<span id="cb4-142"><a href="#cb4-142"></a></span>
-<span id="cb4-143"><a href="#cb4-143"></a>  <span class="co"># Make Sure no reserved characters are used in attribute names</span></span>
-<span id="cb4-144"><a href="#cb4-144"></a>  <span class="cf">if</span> (<span class="kw">sum</span>(<span class="kw">grepl</span>(<span class="st">&quot;[</span><span class="ch">\\</span><span class="st">&#39;</span><span class="ch">\&quot;</span><span class="st">]&quot;</span>,<span class="kw">unlist</span>(<span class="kw">unique</span>(all_attr))))<span class="op">&gt;</span><span class="dv">0</span>){</span>
-<span id="cb4-145"><a href="#cb4-145"></a>    <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Error, attribute name has special characters. Some special characters are reserved for this function (if cjoint&gt;v2.0.6) for the purpose of efficiency. If you still want to display special character in your plot, use the argument attribute.names in the plot function. See manual for more details.&quot;</span>))</span>
-<span id="cb4-146"><a href="#cb4-146"></a>  } <span class="cf">else</span> {</span>
-<span id="cb4-147"><a href="#cb4-147"></a>    <span class="co">#grepl(paste0(&quot;^&quot;,unique(all_attr[unique(all_attr)!=&quot;&quot;]),&quot;_[0-9]+-[0-9]+$&quot;), )</span></span>
-<span id="cb4-148"><a href="#cb4-148"></a>    <span class="cf">if</span> (<span class="kw">sum</span>(<span class="kw">grepl</span>(<span class="st">&quot;^attribute_[0-9]+$&quot;</span>,<span class="kw">unique</span>(all_attr)))<span class="op">&gt;</span><span class="dv">0</span>) {</span>
-<span id="cb4-149"><a href="#cb4-149"></a>      <span class="kw">stop</span> (<span class="kw">paste</span>(<span class="st">&quot;Error, attribute_[0-9]+ is reserved for the function.&quot;</span>))</span>
-<span id="cb4-150"><a href="#cb4-150"></a>    }</span>
-<span id="cb4-151"><a href="#cb4-151"></a>    </span>
-<span id="cb4-152"><a href="#cb4-152"></a>    <span class="cf">if</span> (<span class="kw">sum</span>(<span class="kw">grepl</span>(<span class="st">&quot;^selected_[0-9]+-[0-9]+$&quot;</span>,<span class="kw">unique</span>(all_attr)))<span class="op">&gt;</span><span class="dv">0</span>) {</span>
-<span id="cb4-153"><a href="#cb4-153"></a>      <span class="kw">stop</span> (<span class="kw">paste</span>(<span class="st">&quot;Error, selected_[0-9]+-[0-9]+ is reserved for the function.&quot;</span>))</span>
-<span id="cb4-154"><a href="#cb4-154"></a>    }</span>
-<span id="cb4-155"><a href="#cb4-155"></a>  }</span>
-<span id="cb4-156"><a href="#cb4-156"></a></span>
-<span id="cb4-157"><a href="#cb4-157"></a>  </span>
-<span id="cb4-158"><a href="#cb4-158"></a>  <span class="co"># Initialize output dataframe</span></span>
-<span id="cb4-159"><a href="#cb4-159"></a>  <span class="kw">colnames</span>(qualtrics_data)[<span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>covariates)] &lt;-<span class="st"> </span>covariates</span>
-<span id="cb4-160"><a href="#cb4-160"></a>  out_data_set_cols &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>respondentID),</span>
-<span id="cb4-161"><a href="#cb4-161"></a>                         <span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>covariates),</span>
-<span id="cb4-162"><a href="#cb4-162"></a>                         (attr_name_cols),</span>
-<span id="cb4-163"><a href="#cb4-163"></a>                         (level_name_cols)</span>
-<span id="cb4-164"><a href="#cb4-164"></a>  )</span>
-<span id="cb4-165"><a href="#cb4-165"></a>  out_data_dataset &lt;-<span class="st"> </span>qualtrics_data[,out_data_set_cols]</span>
-<span id="cb4-166"><a href="#cb4-166"></a>  </span>
-<span id="cb4-167"><a href="#cb4-167"></a>  <span class="co"># Take care of null respondentID case</span></span>
-<span id="cb4-168"><a href="#cb4-168"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(respondentID)){</span>
-<span id="cb4-169"><a href="#cb4-169"></a>    id_var_name &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>respondentID)]</span>
-<span id="cb4-170"><a href="#cb4-170"></a>  } <span class="cf">else</span> {</span>
-<span id="cb4-171"><a href="#cb4-171"></a>    out_data_dataset &lt;-<span class="st"> </span><span class="kw">cbind</span>(out_data_dataset, respondent_index)</span>
-<span id="cb4-172"><a href="#cb4-172"></a>    id_var_name &lt;-<span class="st"> &quot;respondent_index&quot;</span></span>
-<span id="cb4-173"><a href="#cb4-173"></a>  }</span>
-<span id="cb4-174"><a href="#cb4-174"></a>  </span>
-<span id="cb4-175"><a href="#cb4-175"></a>  <span class="co"># Parameters </span></span>
-<span id="cb4-176"><a href="#cb4-176"></a>  num_tasks &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">as.integer</span>(attr_name_matrix[,<span class="dv">1</span>]))</span>
-<span id="cb4-177"><a href="#cb4-177"></a>  num_profiles &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">unique</span>(level_name_matrix[,<span class="dv">2</span>]))</span>
-<span id="cb4-178"><a href="#cb4-178"></a>  num_attr &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">as.integer</span>(attr_name_matrix[,<span class="dv">2</span>]))</span>
-<span id="cb4-179"><a href="#cb4-179"></a>  </span>
-<span id="cb4-180"><a href="#cb4-180"></a>  <span class="co"># Replace all - with _ in &quot;F-X-Y&quot;</span></span>
-<span id="cb4-181"><a href="#cb4-181"></a>  attr_regexp &lt;-<span class="st">  </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;-[0-9]+-[0-9]+$&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb4-182"><a href="#cb4-182"></a>  temp.col.index &lt;-<span class="st"> </span><span class="kw">grep</span>(attr_regexp,<span class="kw">colnames</span>(out_data_dataset), <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
-<span id="cb4-183"><a href="#cb4-183"></a>  <span class="kw">colnames</span>(out_data_dataset)[temp.col.index] &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;-&quot;</span>,<span class="st">&quot;_&quot;</span>,<span class="kw">colnames</span>(out_data_dataset)[temp.col.index])</span>
-<span id="cb4-184"><a href="#cb4-184"></a>  </span>
-<span id="cb4-185"><a href="#cb4-185"></a>  <span class="co"># Replace all - with _ in &quot;F-X-Y-Z&quot;</span></span>
-<span id="cb4-186"><a href="#cb4-186"></a>  level_regexp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;-[0-9]+-[0-9]+-[0-9]+$&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb4-187"><a href="#cb4-187"></a>  temp.col.index &lt;-<span class="st"> </span><span class="kw">grep</span>(level_regexp,<span class="kw">colnames</span>(out_data_dataset), <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
-<span id="cb4-188"><a href="#cb4-188"></a>  <span class="kw">colnames</span>(out_data_dataset)[temp.col.index] &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;-&quot;</span>,<span class="st">&quot;_&quot;</span>,<span class="kw">colnames</span>(out_data_dataset)[temp.col.index])</span>
-<span id="cb4-189"><a href="#cb4-189"></a>  </span>
-<span id="cb4-190"><a href="#cb4-190"></a>  <span class="co"># Clean attribute names</span></span>
-<span id="cb4-191"><a href="#cb4-191"></a>  <span class="cf">for</span> (i <span class="cf">in</span> num_attr){</span>
-<span id="cb4-192"><a href="#cb4-192"></a>    temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;attribute_&quot;</span>,i,<span class="st">&quot;&#39;]&lt;-&quot;</span>,<span class="st">&quot;out_data_dataset[&#39;&quot;</span>,letter,<span class="st">&quot;_1_&quot;</span>,i,<span class="st">&quot;&#39;]&quot;</span>)</span>
-<span id="cb4-193"><a href="#cb4-193"></a>    <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-194"><a href="#cb4-194"></a>  }</span>
-<span id="cb4-195"><a href="#cb4-195"></a>  </span>
-<span id="cb4-196"><a href="#cb4-196"></a>  temp_regexp &lt;-<span class="st">  </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;_[0-9]+_[0-9]+$&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb4-197"><a href="#cb4-197"></a>  temp.col.index &lt;-<span class="st"> </span><span class="kw">grep</span>(temp_regexp,<span class="kw">colnames</span>(out_data_dataset), <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
-<span id="cb4-198"><a href="#cb4-198"></a>  out_data_dataset &lt;-<span class="st"> </span>out_data_dataset[,<span class="op">-</span>temp.col.index]</span>
-<span id="cb4-199"><a href="#cb4-199"></a>  </span>
-<span id="cb4-200"><a href="#cb4-200"></a>  <span class="co"># Test Selected</span></span>
-<span id="cb4-201"><a href="#cb4-201"></a></span>
-<span id="cb4-202"><a href="#cb4-202"></a>  test.selected &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="op">!</span><span class="kw">unique</span>(<span class="kw">unlist</span>(qualtrics_data[,response_vars])) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;&quot;</span>,num_profiles))<span class="op">==</span><span class="dv">0</span></span>
-<span id="cb4-203"><a href="#cb4-203"></a>  </span>
-<span id="cb4-204"><a href="#cb4-204"></a>  <span class="co"># if (!test.selected){</span></span>
-<span id="cb4-205"><a href="#cb4-205"></a>  <span class="co">#   stop(paste0(&quot;Responses can only take values among (&quot;,paste(num_profiles, collapse = &quot;,&quot;),&quot;)&quot;))</span></span>
-<span id="cb4-206"><a href="#cb4-206"></a>  <span class="co">#   return (NULL)</span></span>
-<span id="cb4-207"><a href="#cb4-207"></a>  <span class="co"># }</span></span>
-<span id="cb4-208"><a href="#cb4-208"></a>  </span>
-<span id="cb4-209"><a href="#cb4-209"></a>  <span class="co"># Generate Selected</span></span>
-<span id="cb4-210"><a href="#cb4-210"></a>  <span class="cf">if</span> (<span class="kw">is.null</span>(ranks)){</span>
-<span id="cb4-211"><a href="#cb4-211"></a>    <span class="cf">for</span> (i <span class="cf">in</span> num_tasks){</span>
-<span id="cb4-212"><a href="#cb4-212"></a>      temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;temp.selected&quot;</span>,<span class="st">&quot;&lt;-&quot;</span>,<span class="st">&quot;qualtrics_data[,&quot;</span>,response_vars[i],<span class="st">&quot;]&quot;</span>)</span>
-<span id="cb4-213"><a href="#cb4-213"></a>      <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-214"><a href="#cb4-214"></a>      <span class="cf">for</span> (j <span class="cf">in</span> num_profiles){</span>
-<span id="cb4-215"><a href="#cb4-215"></a>        temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset$&#39;selected_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;&lt;-&quot;</span>,<span class="st">&quot;ifelse(temp.selected==j,1,0)&quot;</span>)</span>
-<span id="cb4-216"><a href="#cb4-216"></a>        <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-217"><a href="#cb4-217"></a>        temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset$&#39;selected_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;[temp.selected&quot;</span>,<span class="st">&quot;==&#39;&#39;]&quot;</span>,<span class="st">&quot;&lt;-&quot;</span>,<span class="st">&quot;&#39;&#39;&quot;</span>)</span>
-<span id="cb4-218"><a href="#cb4-218"></a>        <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-219"><a href="#cb4-219"></a>      }</span>
-<span id="cb4-220"><a href="#cb4-220"></a>    }</span>
-<span id="cb4-221"><a href="#cb4-221"></a>  } <span class="cf">else</span> {</span>
-<span id="cb4-222"><a href="#cb4-222"></a>    ranks_col &lt;-<span class="st"> </span><span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>ranks)</span>
-<span id="cb4-223"><a href="#cb4-223"></a>    <span class="cf">for</span> (i <span class="cf">in</span> num_tasks){</span>
-<span id="cb4-224"><a href="#cb4-224"></a>      <span class="cf">for</span> (j <span class="cf">in</span> num_profiles){</span>
-<span id="cb4-225"><a href="#cb4-225"></a>        temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset$&#39;selected_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;&lt;-&quot;</span>,<span class="st">&quot;qualtrics_data[,&quot;</span>,ranks_col[(i<span class="dv">-1</span>)<span class="op">*</span><span class="kw">length</span>(num_profiles)<span class="op">+</span>j],<span class="st">&quot;]&quot;</span>)</span>
-<span id="cb4-226"><a href="#cb4-226"></a>        <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-227"><a href="#cb4-227"></a>      }</span>
-<span id="cb4-228"><a href="#cb4-228"></a>    }</span>
-<span id="cb4-229"><a href="#cb4-229"></a>  }</span>
+<span id="cb4-11"><a href="#cb4-11"></a>read.df.qualtRics  &lt;-<span class="st"> </span><span class="cf">function</span>(filename,<span class="dt">responses=</span><span class="ot">NULL</span>,<span class="dt">covariates =</span> <span class="ot">NULL</span>,<span class="dt">respondentID =</span> <span class="ot">NULL</span>,<span class="dt">letter=</span><span class="st">&quot;F&quot;</span>,<span class="dt">new.format =</span> <span class="ot">FALSE</span>,<span class="dt">ranks =</span> <span class="ot">NULL</span>){</span>
+<span id="cb4-12"><a href="#cb4-12"></a>  <span class="co"># Load CSV Results</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>  <span class="co">#filename &lt;- df_base_wo_na</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>  qualtrics_results &lt;-<span class="st"> </span>filename</span>
+<span id="cb4-15"><a href="#cb4-15"></a>  qualtrics_results &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(qualtrics_results)</span>
+<span id="cb4-16"><a href="#cb4-16"></a>  <span class="co"># Replace all . with -</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>  replace.regexp &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;.[0-9]+.[0-9]+$&quot;</span>)</span>
+<span id="cb4-18"><a href="#cb4-18"></a>  replace.col &lt;-<span class="st"> </span><span class="kw">grep</span>(replace.regexp, <span class="kw">colnames</span>(filename))</span>
+<span id="cb4-19"><a href="#cb4-19"></a>  <span class="kw">colnames</span>(qualtrics_results)[replace.col] &lt;-</span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="st">    </span><span class="kw">gsub</span>(<span class="st">&quot;[.]&quot;</span>,<span class="st">&quot;-&quot;</span>,<span class="kw">colnames</span>(qualtrics_results)[replace.col])</span>
+<span id="cb4-21"><a href="#cb4-21"></a>  </span>
+<span id="cb4-22"><a href="#cb4-22"></a>  replace.regexp &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;.[0-9]+.[0-9]+.[0-9]+$&quot;</span>)</span>
+<span id="cb4-23"><a href="#cb4-23"></a>  replace.col &lt;-<span class="st"> </span><span class="kw">grep</span>(replace.regexp, <span class="kw">colnames</span>(filename))</span>
+<span id="cb4-24"><a href="#cb4-24"></a>  <span class="kw">colnames</span>(qualtrics_results)[replace.col] &lt;-</span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="st">    </span><span class="kw">gsub</span>(<span class="st">&quot;[.]&quot;</span>,<span class="st">&quot;-&quot;</span>,<span class="kw">colnames</span>(qualtrics_results)[replace.col])</span>
+<span id="cb4-26"><a href="#cb4-26"></a>  </span>
+<span id="cb4-27"><a href="#cb4-27"></a>  <span class="co"># Extract variable names/question names</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a>  var_names &lt;-<span class="st"> </span><span class="kw">names</span>(qualtrics_results)</span>
+<span id="cb4-29"><a href="#cb4-29"></a>  q_names &lt;-<span class="st"> </span><span class="kw">names</span>(qualtrics_results)</span>
+<span id="cb4-30"><a href="#cb4-30"></a>  <span class="co"># The rest is the raw data</span></span>
+<span id="cb4-31"><a href="#cb4-31"></a>  qualtrics_data &lt;-<span class="st"> </span>qualtrics_results</span>
+<span id="cb4-32"><a href="#cb4-32"></a>  <span class="kw">colnames</span>(qualtrics_data) &lt;-<span class="st"> </span>var_names</span>
+<span id="cb4-33"><a href="#cb4-33"></a>  <span class="co"># Make respondent index</span></span>
+<span id="cb4-34"><a href="#cb4-34"></a>  respondent_index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(qualtrics_data)</span>
+<span id="cb4-35"><a href="#cb4-35"></a>  </span>
+<span id="cb4-36"><a href="#cb4-36"></a>  <span class="co"># Find the attribute names and number of tasks</span></span>
+<span id="cb4-37"><a href="#cb4-37"></a>  attr_regexp &lt;-<span class="st">  </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;-[0-9]+-[0-9]+(?!-)&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb4-38"><a href="#cb4-38"></a>  attr_name_cols &lt;-<span class="st"> </span><span class="kw">grep</span>(attr_regexp, var_names, <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
+<span id="cb4-39"><a href="#cb4-39"></a>  <span class="co"># remove trailing whitespace</span></span>
+<span id="cb4-40"><a href="#cb4-40"></a>  qualtrics_data[attr_name_cols] &lt;-<span class="st"> </span><span class="kw">lapply</span>(qualtrics_data[attr_name_cols], <span class="cf">function</span> (x) <span class="kw">sub</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">s+$&quot;</span>, <span class="st">&quot;&quot;</span>, x))</span>
+<span id="cb4-41"><a href="#cb4-41"></a>  <span class="co"># Parse to matrix</span></span>
+<span id="cb4-42"><a href="#cb4-42"></a>  attr_name_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(var_names[attr_name_cols],<span class="st">&quot;-&quot;</span>)),<span class="dt">nrow=</span><span class="dv">3</span>,<span class="dt">ncol=</span><span class="kw">length</span>(attr_name_cols))</span>
+<span id="cb4-43"><a href="#cb4-43"></a>  <span class="kw">colnames</span>(attr_name_matrix) &lt;-<span class="st"> </span>var_names[attr_name_cols]</span>
+<span id="cb4-44"><a href="#cb4-44"></a>  attr_name_matrix &lt;-<span class="st"> </span>attr_name_matrix[<span class="dv">2</span><span class="op">:</span><span class="kw">nrow</span>(attr_name_matrix),]</span>
+<span id="cb4-45"><a href="#cb4-45"></a>  attr_name_matrix &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(attr_name_matrix))</span>
+<span id="cb4-46"><a href="#cb4-46"></a>  </span>
+<span id="cb4-47"><a href="#cb4-47"></a>  num_tasks &lt;-<span class="kw">unique</span>(<span class="kw">as.integer</span>(attr_name_matrix[,<span class="dv">1</span>]))</span>
+<span id="cb4-48"><a href="#cb4-48"></a>  </span>
+<span id="cb4-49"><a href="#cb4-49"></a>  <span class="co"># Find the level names and number of profiles</span></span>
+<span id="cb4-50"><a href="#cb4-50"></a>  level_regexp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;-[0-9]+-[0-9]+-[0-9]+&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb4-51"><a href="#cb4-51"></a>  level_name_cols &lt;-<span class="st"> </span><span class="kw">grep</span>(level_regexp, var_names, <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
+<span id="cb4-52"><a href="#cb4-52"></a>  num_profiles &lt;-<span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(<span class="kw">do.call</span>(rbind,<span class="kw">strsplit</span>(var_names[level_name_cols],<span class="st">&quot;-&quot;</span>))[,<span class="dv">3</span>]))</span>
+<span id="cb4-53"><a href="#cb4-53"></a>  </span>
+<span id="cb4-54"><a href="#cb4-54"></a>  <span class="co"># Convert to matrix</span></span>
+<span id="cb4-55"><a href="#cb4-55"></a>  level_name_matrix &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(var_names[level_name_cols],<span class="st">&quot;-&quot;</span>)),<span class="dt">nrow=</span><span class="dv">4</span>,<span class="dt">ncol=</span><span class="kw">length</span>(level_name_cols))</span>
+<span id="cb4-56"><a href="#cb4-56"></a>  <span class="kw">colnames</span>(level_name_matrix) &lt;-<span class="st"> </span>var_names[level_name_cols]</span>
+<span id="cb4-57"><a href="#cb4-57"></a>  level_name_matrix &lt;-<span class="st"> </span>level_name_matrix[<span class="dv">2</span><span class="op">:</span><span class="kw">nrow</span>(level_name_matrix),]</span>
+<span id="cb4-58"><a href="#cb4-58"></a>  level_name_matrix &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(level_name_matrix))</span>
+<span id="cb4-59"><a href="#cb4-59"></a>  </span>
+<span id="cb4-60"><a href="#cb4-60"></a>  <span class="co"># Unique attributes</span></span>
+<span id="cb4-61"><a href="#cb4-61"></a>  all_attr &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
+<span id="cb4-62"><a href="#cb4-62"></a>  <span class="cf">for</span> (attr_vec <span class="cf">in</span> attr_name_cols) {</span>
+<span id="cb4-63"><a href="#cb4-63"></a>    all_attr &lt;-<span class="st"> </span><span class="kw">c</span>(all_attr,qualtrics_data[,attr_vec])</span>
+<span id="cb4-64"><a href="#cb4-64"></a>  }</span>
+<span id="cb4-65"><a href="#cb4-65"></a>  <span class="co">## Remove any trailing white spaces in strings</span></span>
+<span id="cb4-66"><a href="#cb4-66"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq</span>(all_attr)){</span>
+<span id="cb4-67"><a href="#cb4-67"></a>    all_attr[[i]] &lt;-<span class="st"> </span><span class="kw">trimws</span>(all_attr[[i]])</span>
+<span id="cb4-68"><a href="#cb4-68"></a>  }</span>
+<span id="cb4-69"><a href="#cb4-69"></a>  </span>
+<span id="cb4-70"><a href="#cb4-70"></a>  <span class="co">#all_attr &lt;- gsub(pattern = &quot;\\s+$&quot;, replacement = &quot;&quot;, all_attr)</span></span>
+<span id="cb4-71"><a href="#cb4-71"></a>  <span class="co">#no missing values</span></span>
+<span id="cb4-72"><a href="#cb4-72"></a>  unique_attr &lt;-<span class="st"> </span><span class="kw">unique</span>(all_attr)[<span class="kw">nchar</span>(<span class="kw">unique</span>(all_attr)) <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>]</span>
+<span id="cb4-73"><a href="#cb4-73"></a>  <span class="co">#and no na&#39;s</span></span>
+<span id="cb4-74"><a href="#cb4-74"></a>  unique_attr &lt;-<span class="st"> </span>unique_attr[<span class="op">!</span><span class="kw">is.na</span>(unique_attr)]</span>
+<span id="cb4-75"><a href="#cb4-75"></a>  </span>
+<span id="cb4-76"><a href="#cb4-76"></a>  <span class="co">####### Checks on input</span></span>
+<span id="cb4-77"><a href="#cb4-77"></a>  </span>
+<span id="cb4-78"><a href="#cb4-78"></a>  <span class="co"># Are there any responses or ranks</span></span>
+<span id="cb4-79"><a href="#cb4-79"></a>  <span class="cf">if</span> (<span class="kw">is.null</span>(responses) <span class="op">&amp;</span><span class="st"> </span><span class="kw">is.null</span>(ranks)) {</span>
+<span id="cb4-80"><a href="#cb4-80"></a>    <span class="kw">stop</span>(<span class="st">&quot;Either responses or ranks must be non-NULL&quot;</span>)</span>
+<span id="cb4-81"><a href="#cb4-81"></a>    <span class="kw">return</span>(<span class="ot">NULL</span>)</span>
+<span id="cb4-82"><a href="#cb4-82"></a>  }</span>
+<span id="cb4-83"><a href="#cb4-83"></a>  </span>
+<span id="cb4-84"><a href="#cb4-84"></a>  <span class="co"># If there are responses, are there the right number?</span></span>
+<span id="cb4-85"><a href="#cb4-85"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(responses) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">length</span>(num_tasks) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(responses)) {</span>
+<span id="cb4-86"><a href="#cb4-86"></a>    <span class="co"># If number of responses doesn&#39;t match num_tasks</span></span>
+<span id="cb4-87"><a href="#cb4-87"></a>    <span class="kw">stop</span>(<span class="st">&quot;Error: Number of response columns doesn&#39;t equal number of tasks in data&quot;</span>)</span>
+<span id="cb4-88"><a href="#cb4-88"></a>    <span class="kw">return</span>(<span class="ot">NULL</span>)</span>
+<span id="cb4-89"><a href="#cb4-89"></a>  }</span>
+<span id="cb4-90"><a href="#cb4-90"></a>  </span>
+<span id="cb4-91"><a href="#cb4-91"></a>  <span class="co"># If there are ranks, are there the right number?</span></span>
+<span id="cb4-92"><a href="#cb4-92"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(ranks) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="kw">length</span>(num_tasks) <span class="op">!=</span><span class="st"> </span><span class="kw">length</span>(ranks)<span class="op">/</span>num_profiles) {</span>
+<span id="cb4-93"><a href="#cb4-93"></a>    <span class="co"># If number of ranks doesn&#39;t match num_tasks</span></span>
+<span id="cb4-94"><a href="#cb4-94"></a>    <span class="kw">stop</span>(<span class="st">&quot;Error: Number of rank columns doesn&#39;t equal number of tasks times number of profiles in data&quot;</span>)</span>
+<span id="cb4-95"><a href="#cb4-95"></a>    <span class="kw">return</span>(<span class="ot">NULL</span>)</span>
+<span id="cb4-96"><a href="#cb4-96"></a>  }</span>
+<span id="cb4-97"><a href="#cb4-97"></a>  </span>
+<span id="cb4-98"><a href="#cb4-98"></a>  <span class="co"># If no attributes fit the description</span></span>
+<span id="cb4-99"><a href="#cb4-99"></a>  <span class="cf">if</span> (<span class="kw">length</span>(attr_name_cols) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</span>
+<span id="cb4-100"><a href="#cb4-100"></a>    <span class="kw">stop</span>(<span class="st">&quot;Error: Cannot find any columns designating attributes and levels. Please make sure the input file originated from a Qualtrics survey designed using the Conjoint SDT&quot;</span>)</span>
+<span id="cb4-101"><a href="#cb4-101"></a>    <span class="kw">return</span>(<span class="ot">NULL</span>)</span>
+<span id="cb4-102"><a href="#cb4-102"></a>  }</span>
+<span id="cb4-103"><a href="#cb4-103"></a>  </span>
+<span id="cb4-104"><a href="#cb4-104"></a>  <span class="co"># Check whether attribute columns are empty or not</span></span>
+<span id="cb4-105"><a href="#cb4-105"></a>  <span class="cf">for</span> (attr_column <span class="cf">in</span> attr_name_cols) { </span>
+<span id="cb4-106"><a href="#cb4-106"></a>    <span class="cf">if</span> (<span class="kw">is.null</span>(<span class="kw">unique</span>(qualtrics_data[,attr_column]))) {</span>
+<span id="cb4-107"><a href="#cb4-107"></a>      <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Error, attribute column &quot;</span>, var_names[attr_column], <span class="st">&quot; has no attribute names - recommend deleting this column&quot;</span>))</span>
+<span id="cb4-108"><a href="#cb4-108"></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">unique</span>(qualtrics_data[,attr_column])[<span class="dv">1</span>] <span class="op">==</span><span class="st"> &quot;&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(qualtrics_data[,attr_column])) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {</span>
+<span id="cb4-109"><a href="#cb4-109"></a>      <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Error, attribute column &quot;</span>, var_names[attr_column], <span class="st">&quot; has no attribute names - recommend deleting this column&quot;</span>))</span>
+<span id="cb4-110"><a href="#cb4-110"></a>    }</span>
+<span id="cb4-111"><a href="#cb4-111"></a>  }</span>
+<span id="cb4-112"><a href="#cb4-112"></a>  </span>
+<span id="cb4-113"><a href="#cb4-113"></a>  <span class="co"># Check whether level columns are empty or not</span></span>
+<span id="cb4-114"><a href="#cb4-114"></a>  <span class="cf">for</span> (lev_column <span class="cf">in</span> level_name_cols) {</span>
+<span id="cb4-115"><a href="#cb4-115"></a>    <span class="cf">if</span> (<span class="kw">is.null</span>(<span class="kw">unique</span>(qualtrics_data[,lev_column]))) {</span>
+<span id="cb4-116"><a href="#cb4-116"></a>      <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Error, level column &quot;</span>, var_names[lev_column], <span class="st">&quot; has no attribute names - recommend deleting this column&quot;</span>))</span>
+<span id="cb4-117"><a href="#cb4-117"></a>    } <span class="cf">else</span> <span class="cf">if</span> (<span class="kw">unique</span>(qualtrics_data[,lev_column])[<span class="dv">1</span>] <span class="op">==</span><span class="st"> &quot;&quot;</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">unique</span>(qualtrics_data[,lev_column])) <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) {</span>
+<span id="cb4-118"><a href="#cb4-118"></a>      <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Error, level column &quot;</span>, var_names[lev_column], <span class="st">&quot; has no attribute names - recommend deleting this column&quot;</span>))</span>
+<span id="cb4-119"><a href="#cb4-119"></a>    }</span>
+<span id="cb4-120"><a href="#cb4-120"></a>  }  </span>
+<span id="cb4-121"><a href="#cb4-121"></a>  </span>
+<span id="cb4-122"><a href="#cb4-122"></a>  </span>
+<span id="cb4-123"><a href="#cb4-123"></a>  <span class="co"># If respondentID is not null</span></span>
+<span id="cb4-124"><a href="#cb4-124"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(respondentID)){</span>
+<span id="cb4-125"><a href="#cb4-125"></a>    respondent_index &lt;-<span class="st"> </span>qualtrics_data[,<span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>respondentID)]</span>
+<span id="cb4-126"><a href="#cb4-126"></a>    </span>
+<span id="cb4-127"><a href="#cb4-127"></a>  }<span class="cf">else</span>{</span>
+<span id="cb4-128"><a href="#cb4-128"></a>    respondent_index &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(qualtrics_data)</span>
+<span id="cb4-129"><a href="#cb4-129"></a>  }</span>
+<span id="cb4-130"><a href="#cb4-130"></a>  </span>
+<span id="cb4-131"><a href="#cb4-131"></a>  <span class="co"># Get the response rows</span></span>
+<span id="cb4-132"><a href="#cb4-132"></a>  <span class="cf">if</span> (<span class="kw">is.character</span>(responses[<span class="dv">1</span>])){</span>
+<span id="cb4-133"><a href="#cb4-133"></a>    response_vars &lt;-<span class="st"> </span><span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>responses)</span>
+<span id="cb4-134"><a href="#cb4-134"></a>  }<span class="cf">else</span>{</span>
+<span id="cb4-135"><a href="#cb4-135"></a>    response_vars &lt;-<span class="st"> </span>responses</span>
+<span id="cb4-136"><a href="#cb4-136"></a>  }</span>
+<span id="cb4-137"><a href="#cb4-137"></a>  </span>
+<span id="cb4-138"><a href="#cb4-138"></a>  <span class="kw">grepl</span>(<span class="st">&quot;[</span><span class="ch">\\</span><span class="st">&#39;</span><span class="ch">\&quot;</span><span class="st">]&quot;</span>,<span class="kw">unlist</span>(<span class="kw">unique</span>(all_attr)))</span>
+<span id="cb4-139"><a href="#cb4-139"></a>  </span>
+<span id="cb4-140"><a href="#cb4-140"></a>  <span class="co"># Make Sure no reserved characters are used in attribute names</span></span>
+<span id="cb4-141"><a href="#cb4-141"></a>  <span class="cf">if</span> (<span class="kw">sum</span>(<span class="kw">grepl</span>(<span class="st">&quot;[</span><span class="ch">\\</span><span class="st">&#39;</span><span class="ch">\&quot;</span><span class="st">]&quot;</span>,<span class="kw">unlist</span>(<span class="kw">unique</span>(all_attr))))<span class="op">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb4-142"><a href="#cb4-142"></a>    <span class="kw">stop</span>(<span class="kw">paste</span>(<span class="st">&quot;Error, attribute name has special characters. Some special characters are reserved for this function (if cjoint&gt;v2.0.6) for the purpose of efficiency. If you still want to display special character in your plot, use the argument attribute.names in the plot function. See manual for more details.&quot;</span>))</span>
+<span id="cb4-143"><a href="#cb4-143"></a>  } <span class="cf">else</span> {</span>
+<span id="cb4-144"><a href="#cb4-144"></a>    <span class="co">#grepl(paste0(&quot;^&quot;,unique(all_attr[unique(all_attr)!=&quot;&quot;]),&quot;_[0-9]+-[0-9]+$&quot;), )</span></span>
+<span id="cb4-145"><a href="#cb4-145"></a>    <span class="cf">if</span> (<span class="kw">sum</span>(<span class="kw">grepl</span>(<span class="st">&quot;^attribute_[0-9]+$&quot;</span>,<span class="kw">unique</span>(all_attr)))<span class="op">&gt;</span><span class="dv">0</span>) {</span>
+<span id="cb4-146"><a href="#cb4-146"></a>      <span class="kw">stop</span> (<span class="kw">paste</span>(<span class="st">&quot;Error, attribute_[0-9]+ is reserved for the function.&quot;</span>))</span>
+<span id="cb4-147"><a href="#cb4-147"></a>    }</span>
+<span id="cb4-148"><a href="#cb4-148"></a>    </span>
+<span id="cb4-149"><a href="#cb4-149"></a>    <span class="cf">if</span> (<span class="kw">sum</span>(<span class="kw">grepl</span>(<span class="st">&quot;^selected_[0-9]+-[0-9]+$&quot;</span>,<span class="kw">unique</span>(all_attr)))<span class="op">&gt;</span><span class="dv">0</span>) {</span>
+<span id="cb4-150"><a href="#cb4-150"></a>      <span class="kw">stop</span> (<span class="kw">paste</span>(<span class="st">&quot;Error, selected_[0-9]+-[0-9]+ is reserved for the function.&quot;</span>))</span>
+<span id="cb4-151"><a href="#cb4-151"></a>    }</span>
+<span id="cb4-152"><a href="#cb4-152"></a>  }</span>
+<span id="cb4-153"><a href="#cb4-153"></a>  </span>
+<span id="cb4-154"><a href="#cb4-154"></a>  </span>
+<span id="cb4-155"><a href="#cb4-155"></a>  <span class="co"># Initialize output dataframe</span></span>
+<span id="cb4-156"><a href="#cb4-156"></a>  <span class="kw">colnames</span>(qualtrics_data)[<span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>covariates)] &lt;-<span class="st"> </span>covariates</span>
+<span id="cb4-157"><a href="#cb4-157"></a>  out_data_set_cols &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>respondentID),</span>
+<span id="cb4-158"><a href="#cb4-158"></a>                         <span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>covariates),</span>
+<span id="cb4-159"><a href="#cb4-159"></a>                         (attr_name_cols),</span>
+<span id="cb4-160"><a href="#cb4-160"></a>                         (level_name_cols)</span>
+<span id="cb4-161"><a href="#cb4-161"></a>  )</span>
+<span id="cb4-162"><a href="#cb4-162"></a>  out_data_dataset &lt;-<span class="st"> </span>qualtrics_data[,out_data_set_cols]</span>
+<span id="cb4-163"><a href="#cb4-163"></a>  </span>
+<span id="cb4-164"><a href="#cb4-164"></a>  <span class="co"># Take care of null respondentID case</span></span>
+<span id="cb4-165"><a href="#cb4-165"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.null</span>(respondentID)){</span>
+<span id="cb4-166"><a href="#cb4-166"></a>    id_var_name &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>respondentID)]</span>
+<span id="cb4-167"><a href="#cb4-167"></a>  } <span class="cf">else</span> {</span>
+<span id="cb4-168"><a href="#cb4-168"></a>    out_data_dataset &lt;-<span class="st"> </span><span class="kw">cbind</span>(out_data_dataset, respondent_index)</span>
+<span id="cb4-169"><a href="#cb4-169"></a>    id_var_name &lt;-<span class="st"> &quot;respondent_index&quot;</span></span>
+<span id="cb4-170"><a href="#cb4-170"></a>  }</span>
+<span id="cb4-171"><a href="#cb4-171"></a>  </span>
+<span id="cb4-172"><a href="#cb4-172"></a>  <span class="co"># Parameters </span></span>
+<span id="cb4-173"><a href="#cb4-173"></a>  num_tasks &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">as.integer</span>(attr_name_matrix[,<span class="dv">1</span>]))</span>
+<span id="cb4-174"><a href="#cb4-174"></a>  num_profiles &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">unique</span>(level_name_matrix[,<span class="dv">2</span>]))</span>
+<span id="cb4-175"><a href="#cb4-175"></a>  num_attr &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">as.integer</span>(attr_name_matrix[,<span class="dv">2</span>]))</span>
+<span id="cb4-176"><a href="#cb4-176"></a>  </span>
+<span id="cb4-177"><a href="#cb4-177"></a>  <span class="co"># Replace all - with _ in &quot;F-X-Y&quot;</span></span>
+<span id="cb4-178"><a href="#cb4-178"></a>  attr_regexp &lt;-<span class="st">  </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;-[0-9]+-[0-9]+$&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb4-179"><a href="#cb4-179"></a>  temp.col.index &lt;-<span class="st"> </span><span class="kw">grep</span>(attr_regexp,<span class="kw">colnames</span>(out_data_dataset), <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
+<span id="cb4-180"><a href="#cb4-180"></a>  <span class="kw">colnames</span>(out_data_dataset)[temp.col.index] &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;-&quot;</span>,<span class="st">&quot;_&quot;</span>,<span class="kw">colnames</span>(out_data_dataset)[temp.col.index])</span>
+<span id="cb4-181"><a href="#cb4-181"></a>  </span>
+<span id="cb4-182"><a href="#cb4-182"></a>  <span class="co"># Replace all - with _ in &quot;F-X-Y-Z&quot;</span></span>
+<span id="cb4-183"><a href="#cb4-183"></a>  level_regexp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;-[0-9]+-[0-9]+-[0-9]+$&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb4-184"><a href="#cb4-184"></a>  temp.col.index &lt;-<span class="st"> </span><span class="kw">grep</span>(level_regexp,<span class="kw">colnames</span>(out_data_dataset), <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
+<span id="cb4-185"><a href="#cb4-185"></a>  <span class="kw">colnames</span>(out_data_dataset)[temp.col.index] &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;-&quot;</span>,<span class="st">&quot;_&quot;</span>,<span class="kw">colnames</span>(out_data_dataset)[temp.col.index])</span>
+<span id="cb4-186"><a href="#cb4-186"></a>  </span>
+<span id="cb4-187"><a href="#cb4-187"></a>  <span class="co"># Clean attribute names</span></span>
+<span id="cb4-188"><a href="#cb4-188"></a>  <span class="cf">for</span> (i <span class="cf">in</span> num_attr){</span>
+<span id="cb4-189"><a href="#cb4-189"></a>    temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;attribute_&quot;</span>,i,<span class="st">&quot;&#39;]&lt;-&quot;</span>,<span class="st">&quot;out_data_dataset[&#39;&quot;</span>,letter,<span class="st">&quot;_1_&quot;</span>,i,<span class="st">&quot;&#39;]&quot;</span>)</span>
+<span id="cb4-190"><a href="#cb4-190"></a>    <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-191"><a href="#cb4-191"></a>  }</span>
+<span id="cb4-192"><a href="#cb4-192"></a>  </span>
+<span id="cb4-193"><a href="#cb4-193"></a>  temp_regexp &lt;-<span class="st">  </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;_[0-9]+_[0-9]+$&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb4-194"><a href="#cb4-194"></a>  temp.col.index &lt;-<span class="st"> </span><span class="kw">grep</span>(temp_regexp,<span class="kw">colnames</span>(out_data_dataset), <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
+<span id="cb4-195"><a href="#cb4-195"></a>  out_data_dataset &lt;-<span class="st"> </span>out_data_dataset[,<span class="op">-</span>temp.col.index]</span>
+<span id="cb4-196"><a href="#cb4-196"></a>  </span>
+<span id="cb4-197"><a href="#cb4-197"></a>  <span class="co"># Test Selected</span></span>
+<span id="cb4-198"><a href="#cb4-198"></a>  </span>
+<span id="cb4-199"><a href="#cb4-199"></a>  test.selected &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="op">!</span><span class="kw">unique</span>(<span class="kw">unlist</span>(qualtrics_data[,response_vars])) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;&quot;</span>,num_profiles))<span class="op">==</span><span class="dv">0</span></span>
+<span id="cb4-200"><a href="#cb4-200"></a>  </span>
+<span id="cb4-201"><a href="#cb4-201"></a>  <span class="co"># if (!test.selected){</span></span>
+<span id="cb4-202"><a href="#cb4-202"></a>  <span class="co">#   stop(paste0(&quot;Responses can only take values among (&quot;,paste(num_profiles, collapse = &quot;,&quot;),&quot;)&quot;))</span></span>
+<span id="cb4-203"><a href="#cb4-203"></a>  <span class="co">#   return (NULL)</span></span>
+<span id="cb4-204"><a href="#cb4-204"></a>  <span class="co"># }</span></span>
+<span id="cb4-205"><a href="#cb4-205"></a>  </span>
+<span id="cb4-206"><a href="#cb4-206"></a>  <span class="co"># Generate Selected</span></span>
+<span id="cb4-207"><a href="#cb4-207"></a>  <span class="cf">if</span> (<span class="kw">is.null</span>(ranks)){</span>
+<span id="cb4-208"><a href="#cb4-208"></a>    <span class="cf">for</span> (i <span class="cf">in</span> num_tasks){</span>
+<span id="cb4-209"><a href="#cb4-209"></a>      temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;temp.selected&quot;</span>,<span class="st">&quot;&lt;-&quot;</span>,<span class="st">&quot;qualtrics_data[,&quot;</span>,response_vars[i],<span class="st">&quot;]&quot;</span>)</span>
+<span id="cb4-210"><a href="#cb4-210"></a>      <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-211"><a href="#cb4-211"></a>      <span class="cf">for</span> (j <span class="cf">in</span> num_profiles){</span>
+<span id="cb4-212"><a href="#cb4-212"></a>        temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset$&#39;selected_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;&lt;-&quot;</span>,<span class="st">&quot;ifelse(temp.selected==j,1,0)&quot;</span>)</span>
+<span id="cb4-213"><a href="#cb4-213"></a>        <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-214"><a href="#cb4-214"></a>        temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset$&#39;selected_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;[temp.selected&quot;</span>,<span class="st">&quot;==&#39;&#39;]&quot;</span>,<span class="st">&quot;&lt;-&quot;</span>,<span class="st">&quot;&#39;&#39;&quot;</span>)</span>
+<span id="cb4-215"><a href="#cb4-215"></a>        <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-216"><a href="#cb4-216"></a>      }</span>
+<span id="cb4-217"><a href="#cb4-217"></a>    }</span>
+<span id="cb4-218"><a href="#cb4-218"></a>  } <span class="cf">else</span> {</span>
+<span id="cb4-219"><a href="#cb4-219"></a>    ranks_col &lt;-<span class="st"> </span><span class="kw">which</span>(q_names <span class="op">%in%</span><span class="st"> </span>ranks)</span>
+<span id="cb4-220"><a href="#cb4-220"></a>    <span class="cf">for</span> (i <span class="cf">in</span> num_tasks){</span>
+<span id="cb4-221"><a href="#cb4-221"></a>      <span class="cf">for</span> (j <span class="cf">in</span> num_profiles){</span>
+<span id="cb4-222"><a href="#cb4-222"></a>        temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset$&#39;selected_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;&lt;-&quot;</span>,<span class="st">&quot;qualtrics_data[,&quot;</span>,ranks_col[(i<span class="dv">-1</span>)<span class="op">*</span><span class="kw">length</span>(num_profiles)<span class="op">+</span>j],<span class="st">&quot;]&quot;</span>)</span>
+<span id="cb4-223"><a href="#cb4-223"></a>        <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-224"><a href="#cb4-224"></a>      }</span>
+<span id="cb4-225"><a href="#cb4-225"></a>    }</span>
+<span id="cb4-226"><a href="#cb4-226"></a>  }</span>
+<span id="cb4-227"><a href="#cb4-227"></a>  </span>
+<span id="cb4-228"><a href="#cb4-228"></a>  <span class="co"># Remove row if attribute name is empty and trim all attribute entries</span></span>
+<span id="cb4-229"><a href="#cb4-229"></a>  trim &lt;-<span class="st"> </span><span class="cf">function</span> (x) <span class="kw">gsub</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">s+|</span><span class="ch">\\</span><span class="st">s+$&quot;</span>, <span class="st">&quot;&quot;</span>, x)</span>
 <span id="cb4-230"><a href="#cb4-230"></a>  </span>
-<span id="cb4-231"><a href="#cb4-231"></a>  <span class="co"># Remove row if attribute name is empty and trim all attribute entries</span></span>
-<span id="cb4-232"><a href="#cb4-232"></a>  trim &lt;-<span class="st"> </span><span class="cf">function</span> (x) <span class="kw">gsub</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">s+|</span><span class="ch">\\</span><span class="st">s+$&quot;</span>, <span class="st">&quot;&quot;</span>, x)</span>
-<span id="cb4-233"><a href="#cb4-233"></a>  </span>
-<span id="cb4-234"><a href="#cb4-234"></a>  <span class="cf">for</span> (i <span class="cf">in</span> num_attr){</span>
-<span id="cb4-235"><a href="#cb4-235"></a>    temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset&quot;</span>,<span class="st">&quot;&lt;-subset(out_data_dataset, attribute_&quot;</span>,i,<span class="st">&quot;!=&#39;&#39;)&quot;</span>)</span>
-<span id="cb4-236"><a href="#cb4-236"></a>    <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-237"><a href="#cb4-237"></a>    temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;attribute_&quot;</span>,i,<span class="st">&quot;&#39;] &lt;- &quot;</span>,<span class="st">&quot;trim(out_data_dataset$&#39;attribute_&quot;</span>,i,<span class="st">&quot;&#39;)&quot;</span>)</span>
-<span id="cb4-238"><a href="#cb4-238"></a>    <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-239"><a href="#cb4-239"></a>  }</span>
-<span id="cb4-240"><a href="#cb4-240"></a>  </span>
-<span id="cb4-241"><a href="#cb4-241"></a>  <span class="co"># Generate Attributes</span></span>
-<span id="cb4-242"><a href="#cb4-242"></a>  attribute_var_names &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">unlist</span>(out_data_dataset[,<span class="kw">grep</span>(<span class="st">&quot;attribute_[0-9]+$&quot;</span>, <span class="kw">colnames</span>(out_data_dataset))]))</span>
-<span id="cb4-243"><a href="#cb4-243"></a>  attribute_var_names_label &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>,<span class="st">&quot;.&quot;</span>, attribute_var_names)</span>
-<span id="cb4-244"><a href="#cb4-244"></a>  </span>
-<span id="cb4-245"><a href="#cb4-245"></a>  <span class="cf">for</span> (i <span class="cf">in</span> num_tasks){</span>
-<span id="cb4-246"><a href="#cb4-246"></a>    <span class="cf">for</span> (j <span class="cf">in</span> num_profiles){</span>
-<span id="cb4-247"><a href="#cb4-247"></a>      <span class="cf">for</span> (r <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(attribute_var_names)){</span>
-<span id="cb4-248"><a href="#cb4-248"></a>        temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;&quot;</span>,attribute_var_names[r],<span class="st">&quot;_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;]&lt;-&#39;&#39;&quot;</span>)</span>
-<span id="cb4-249"><a href="#cb4-249"></a>        <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-250"><a href="#cb4-250"></a>        temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;&quot;</span>,attribute_var_names[r],<span class="st">&quot;.rowpos_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;]&lt;-&#39;&#39;&quot;</span>)</span>
-<span id="cb4-251"><a href="#cb4-251"></a>        <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-252"><a href="#cb4-252"></a>      }</span>
-<span id="cb4-253"><a href="#cb4-253"></a>    }</span>
-<span id="cb4-254"><a href="#cb4-254"></a>  }</span>
-<span id="cb4-255"><a href="#cb4-255"></a>  </span>
-<span id="cb4-256"><a href="#cb4-256"></a>  <span class="cf">for</span> (i <span class="cf">in</span> num_tasks){</span>
-<span id="cb4-257"><a href="#cb4-257"></a>    <span class="cf">for</span> (j <span class="cf">in</span> num_profiles){</span>
-<span id="cb4-258"><a href="#cb4-258"></a>      <span class="cf">for</span> (k <span class="cf">in</span> num_attr){</span>
-<span id="cb4-259"><a href="#cb4-259"></a>        <span class="cf">for</span> (r <span class="cf">in</span> attribute_var_names){</span>
-<span id="cb4-260"><a href="#cb4-260"></a>          temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;&quot;</span>,r,<span class="st">&quot;_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;]&quot;</span>,</span>
-<span id="cb4-261"><a href="#cb4-261"></a>                             <span class="st">&quot;[out_data_dataset[&#39;attribute_&quot;</span>,k,<span class="st">&quot;&#39;]==&#39;&quot;</span>,r,</span>
-<span id="cb4-262"><a href="#cb4-262"></a>                             <span class="st">&quot;&#39;]&lt;-out_data_dataset[&#39;&quot;</span>,letter,<span class="st">&quot;_&quot;</span>,i,<span class="st">&quot;_&quot;</span>,j,<span class="st">&quot;_&quot;</span>,k,</span>
-<span id="cb4-263"><a href="#cb4-263"></a>                             <span class="st">&quot;&#39;][out_data_dataset[&#39;attribute_&quot;</span>,k,<span class="st">&quot;&#39;]==&#39;&quot;</span>,r,<span class="st">&quot;&#39;]&quot;</span>)</span>
-<span id="cb4-264"><a href="#cb4-264"></a>          <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-265"><a href="#cb4-265"></a>          </span>
-<span id="cb4-266"><a href="#cb4-266"></a>          temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;&quot;</span>,r,<span class="st">&quot;.rowpos&quot;</span>,<span class="st">&quot;_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;&quot;</span>,</span>
-<span id="cb4-267"><a href="#cb4-267"></a>                             <span class="st">&quot;][out_data_dataset[&#39;attribute_&quot;</span>,k,<span class="st">&quot;&#39;]==&#39;&quot;</span>,r,</span>
-<span id="cb4-268"><a href="#cb4-268"></a>                             <span class="st">&quot;&#39;]&lt;-k&quot;</span>)</span>
-<span id="cb4-269"><a href="#cb4-269"></a>          <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
-<span id="cb4-270"><a href="#cb4-270"></a>        }</span>
-<span id="cb4-271"><a href="#cb4-271"></a>      }</span>
-<span id="cb4-272"><a href="#cb4-272"></a>    }</span>
-<span id="cb4-273"><a href="#cb4-273"></a>  }</span>
-<span id="cb4-274"><a href="#cb4-274"></a>  </span>
-<span id="cb4-275"><a href="#cb4-275"></a>  temp_regexp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;_[0-9]+_[0-9]+_[0-9]+$&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
-<span id="cb4-276"><a href="#cb4-276"></a>  temp.col.index &lt;-<span class="st"> </span><span class="kw">grep</span>(temp_regexp,<span class="kw">colnames</span>(out_data_dataset), <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
-<span id="cb4-277"><a href="#cb4-277"></a>  out_data_dataset &lt;-<span class="st"> </span>out_data_dataset[,<span class="op">-</span>temp.col.index]</span>
-<span id="cb4-278"><a href="#cb4-278"></a>  </span>
-<span id="cb4-279"><a href="#cb4-279"></a>  <span class="co"># Delete attribute names</span></span>
-<span id="cb4-280"><a href="#cb4-280"></a>  regex.temp &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;^attribute&quot;</span>,<span class="st">&quot;_[0-9]+&quot;</span>,<span class="st">&quot;$&quot;</span>)</span>
-<span id="cb4-281"><a href="#cb4-281"></a>  out_data_dataset &lt;-<span class="st"> </span>out_data_dataset[,<span class="op">-</span><span class="kw">grep</span>(regex.temp, <span class="kw">colnames</span>(out_data_dataset))]</span>
-<span id="cb4-282"><a href="#cb4-282"></a>  </span>
-<span id="cb4-283"><a href="#cb4-283"></a>  <span class="co"># Reshape the dataset Batch 1 - Round/Task</span></span>
-<span id="cb4-284"><a href="#cb4-284"></a>  regex.temp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>,<span class="kw">re.escape</span>(attribute_var_names),<span class="st">&quot;_[0-9]+-[0-9]+&quot;</span>,<span class="st">&quot;$&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)</span>
-<span id="cb4-285"><a href="#cb4-285"></a>  regex.temp<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>,<span class="kw">re.escape</span>(attribute_var_names),<span class="st">&quot;.rowpos_[0-9]+-[0-9]+&quot;</span>,<span class="st">&quot;$&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)</span>
-<span id="cb4-286"><a href="#cb4-286"></a>  </span>
-<span id="cb4-287"><a href="#cb4-287"></a>  varying.temp &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(regex.temp, <span class="kw">colnames</span>(out_data_dataset))]</span>
-<span id="cb4-288"><a href="#cb4-288"></a>  varying.temp<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(regex.temp<span class="fl">.2</span>, <span class="kw">colnames</span>(out_data_dataset))]</span>
-<span id="cb4-289"><a href="#cb4-289"></a>  varying.temp<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(<span class="st">&quot;^selected_[0-9]+-[0-9]+$&quot;</span>, <span class="kw">colnames</span>(out_data_dataset))]</span>
-<span id="cb4-290"><a href="#cb4-290"></a>  </span>
-<span id="cb4-291"><a href="#cb4-291"></a>  varying.temp &lt;-<span class="st"> </span><span class="kw">c</span>(varying.temp, varying.temp<span class="fl">.2</span>, varying.temp<span class="fl">.3</span>)</span>
-<span id="cb4-292"><a href="#cb4-292"></a>  </span>
-<span id="cb4-293"><a href="#cb4-293"></a>  v.names.temp &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">gsub</span>(<span class="st">&quot;-[0-9]+$&quot;</span>,<span class="st">&quot;&quot;</span>,varying.temp))</span>
-<span id="cb4-294"><a href="#cb4-294"></a>  v.names.temp &lt;-<span class="st"> </span>v.names.temp[<span class="kw">order</span>(v.names.temp)]</span>
-<span id="cb4-295"><a href="#cb4-295"></a>  </span>
-<span id="cb4-296"><a href="#cb4-296"></a>  varying.temp &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">rep</span>(v.names.temp, <span class="kw">length</span>(num_tasks)),<span class="st">&quot;-&quot;</span>,</span>
-<span id="cb4-297"><a href="#cb4-297"></a>                         <span class="kw">rep</span>(num_tasks, <span class="dt">each=</span><span class="kw">length</span>(v.names.temp)))</span>
-<span id="cb4-298"><a href="#cb4-298"></a>  </span>
-<span id="cb4-299"><a href="#cb4-299"></a>  </span>
-<span id="cb4-300"><a href="#cb4-300"></a>  out_data_dataset &lt;-<span class="st"> </span><span class="kw">reshape</span>(out_data_dataset,</span>
-<span id="cb4-301"><a href="#cb4-301"></a>                              <span class="dt">idvar =</span> id_var_name,</span>
-<span id="cb4-302"><a href="#cb4-302"></a>                              <span class="dt">varying =</span> varying.temp,</span>
-<span id="cb4-303"><a href="#cb4-303"></a>                              <span class="dt">sep =</span> <span class="st">&quot;-&quot;</span>,</span>
-<span id="cb4-304"><a href="#cb4-304"></a>                              <span class="dt">timevar =</span> <span class="st">&quot;task&quot;</span>,</span>
-<span id="cb4-305"><a href="#cb4-305"></a>                              <span class="dt">times =</span> num_tasks,</span>
-<span id="cb4-306"><a href="#cb4-306"></a>                              <span class="dt">v.names =</span> v.names.temp,</span>
-<span id="cb4-307"><a href="#cb4-307"></a>                              <span class="dt">new.row.names =</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw">length</span>(num_tasks)<span class="op">*</span><span class="kw">nrow</span>(out_data_dataset)),</span>
-<span id="cb4-308"><a href="#cb4-308"></a>                              <span class="dt">direction =</span> <span class="st">&quot;long&quot;</span>)</span>
-<span id="cb4-309"><a href="#cb4-309"></a>  </span>
-<span id="cb4-310"><a href="#cb4-310"></a>  <span class="co"># Reshape the dataset Batch 2 - Profile</span></span>
-<span id="cb4-311"><a href="#cb4-311"></a>  regex.temp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>,<span class="kw">re.escape</span>(attribute_var_names),<span class="st">&quot;_[0-9]+&quot;</span>,<span class="st">&quot;$&quot;</span>), <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)</span>
-<span id="cb4-312"><a href="#cb4-312"></a>  regex.temp<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>,<span class="kw">re.escape</span>(attribute_var_names),<span class="st">&quot;.rowpos_[0-9]+&quot;</span>,<span class="st">&quot;$&quot;</span>), <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)</span>
-<span id="cb4-313"><a href="#cb4-313"></a>  </span>
-<span id="cb4-314"><a href="#cb4-314"></a>  varying.temp &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(regex.temp, <span class="kw">colnames</span>(out_data_dataset))]</span>
-<span id="cb4-315"><a href="#cb4-315"></a>  varying.temp<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(regex.temp<span class="fl">.2</span>, <span class="kw">colnames</span>(out_data_dataset))]</span>
-<span id="cb4-316"><a href="#cb4-316"></a>  varying.temp<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(<span class="st">&quot;^selected_[0-9]+$&quot;</span>, <span class="kw">colnames</span>(out_data_dataset))]</span>
-<span id="cb4-317"><a href="#cb4-317"></a>  varying.temp &lt;-<span class="st"> </span><span class="kw">c</span>(varying.temp, varying.temp<span class="fl">.2</span>, varying.temp<span class="fl">.3</span>)</span>
-<span id="cb4-318"><a href="#cb4-318"></a>  </span>
-<span id="cb4-319"><a href="#cb4-319"></a>  v.names.temp &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">gsub</span>(<span class="st">&quot;_[0-9]+$&quot;</span>,<span class="st">&quot;&quot;</span>,varying.temp))</span>
-<span id="cb4-320"><a href="#cb4-320"></a>  v.names.temp &lt;-<span class="st"> </span>v.names.temp[<span class="kw">order</span>(v.names.temp)]</span>
-<span id="cb4-321"><a href="#cb4-321"></a>  </span>
-<span id="cb4-322"><a href="#cb4-322"></a>  varying.temp &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">rep</span>(v.names.temp, <span class="kw">length</span>(num_profiles)),<span class="st">&quot;_&quot;</span>,</span>
-<span id="cb4-323"><a href="#cb4-323"></a>                         <span class="kw">rep</span>(num_profiles, <span class="dt">each=</span><span class="kw">length</span>(v.names.temp)))</span>
-<span id="cb4-324"><a href="#cb4-324"></a>  </span>
-<span id="cb4-325"><a href="#cb4-325"></a>  out_data_dataset &lt;-<span class="st"> </span><span class="kw">reshape</span>(out_data_dataset,</span>
-<span id="cb4-326"><a href="#cb4-326"></a>                              <span class="dt">idvar =</span> id_var_name,</span>
-<span id="cb4-327"><a href="#cb4-327"></a>                              <span class="dt">varying =</span> varying.temp,</span>
-<span id="cb4-328"><a href="#cb4-328"></a>                              <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>,</span>
-<span id="cb4-329"><a href="#cb4-329"></a>                              <span class="dt">timevar =</span> <span class="st">&quot;profile&quot;</span>,</span>
-<span id="cb4-330"><a href="#cb4-330"></a>                              <span class="dt">times =</span> num_profiles,</span>
-<span id="cb4-331"><a href="#cb4-331"></a>                              <span class="dt">v.names =</span> v.names.temp,</span>
-<span id="cb4-332"><a href="#cb4-332"></a>                              <span class="dt">new.row.names =</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw">length</span>(num_profiles)<span class="op">*</span><span class="kw">nrow</span>(out_data_dataset)),</span>
-<span id="cb4-333"><a href="#cb4-333"></a>                              <span class="dt">direction =</span> <span class="st">&quot;long&quot;</span>)</span>
-<span id="cb4-334"><a href="#cb4-334"></a>  </span>
-<span id="cb4-335"><a href="#cb4-335"></a>  <span class="co">## Post-processiong</span></span>
-<span id="cb4-336"><a href="#cb4-336"></a>  <span class="kw">colnames</span>(out_data_dataset)&lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>,<span class="st">&quot;.&quot;</span>,<span class="kw">colnames</span>(out_data_dataset))</span>
-<span id="cb4-337"><a href="#cb4-337"></a>  </span>
-<span id="cb4-338"><a href="#cb4-338"></a>  <span class="cf">for</span> (m <span class="cf">in</span> attribute_var_names_label){</span>
-<span id="cb4-339"><a href="#cb4-339"></a>    out_data_dataset[[m]] &lt;-<span class="st"> </span><span class="kw">as.factor</span>(out_data_dataset[[m]])</span>
-<span id="cb4-340"><a href="#cb4-340"></a>  }</span>
-<span id="cb4-341"><a href="#cb4-341"></a>  </span>
-<span id="cb4-342"><a href="#cb4-342"></a>  <span class="kw">colnames</span>(out_data_dataset)[<span class="kw">which</span>(<span class="kw">colnames</span>(out_data_dataset)<span class="op">==</span>id_var_name)] &lt;-<span class="st"> &quot;respondent&quot;</span></span>
-<span id="cb4-343"><a href="#cb4-343"></a>  out_data_dataset<span class="op">$</span>respondentIndex &lt;-<span class="st"> </span><span class="kw">as.factor</span>(out_data_dataset<span class="op">$</span>respondent)</span>
-<span id="cb4-344"><a href="#cb4-344"></a>  out_data_dataset<span class="op">$</span>respondentIndex &lt;-<span class="st"> </span><span class="kw">as.integer</span>(out_data_dataset<span class="op">$</span>respondentIndex)</span>
-<span id="cb4-345"><a href="#cb4-345"></a>  out_data_dataset<span class="op">$</span>selected &lt;-<span class="st"> </span><span class="kw">as.integer</span>(out_data_dataset<span class="op">$</span>selected)</span>
-<span id="cb4-346"><a href="#cb4-346"></a>  out_data_dataset<span class="op">$</span>task &lt;-<span class="st"> </span><span class="kw">as.integer</span>(out_data_dataset<span class="op">$</span>task)</span>
-<span id="cb4-347"><a href="#cb4-347"></a>  out_data_dataset<span class="op">$</span>profile &lt;-<span class="st"> </span><span class="kw">as.integer</span>(out_data_dataset<span class="op">$</span>profile)</span>
-<span id="cb4-348"><a href="#cb4-348"></a>  </span>
-<span id="cb4-349"><a href="#cb4-349"></a>  <span class="co"># Return dataset</span></span>
-<span id="cb4-350"><a href="#cb4-350"></a>  <span class="kw">return</span>(out_data_dataset)</span>
-<span id="cb4-351"><a href="#cb4-351"></a>}</span></code></pre></div>
+<span id="cb4-231"><a href="#cb4-231"></a>  <span class="cf">for</span> (i <span class="cf">in</span> num_attr){</span>
+<span id="cb4-232"><a href="#cb4-232"></a>    temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset&quot;</span>,<span class="st">&quot;&lt;-subset(out_data_dataset, attribute_&quot;</span>,i,<span class="st">&quot;!=&#39;&#39;)&quot;</span>)</span>
+<span id="cb4-233"><a href="#cb4-233"></a>    <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-234"><a href="#cb4-234"></a>    temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;attribute_&quot;</span>,i,<span class="st">&quot;&#39;] &lt;- &quot;</span>,<span class="st">&quot;trim(out_data_dataset$&#39;attribute_&quot;</span>,i,<span class="st">&quot;&#39;)&quot;</span>)</span>
+<span id="cb4-235"><a href="#cb4-235"></a>    <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-236"><a href="#cb4-236"></a>  }</span>
+<span id="cb4-237"><a href="#cb4-237"></a>  </span>
+<span id="cb4-238"><a href="#cb4-238"></a>  <span class="co"># Generate Attributes</span></span>
+<span id="cb4-239"><a href="#cb4-239"></a>  attribute_var_names &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">unlist</span>(out_data_dataset[,<span class="kw">grep</span>(<span class="st">&quot;attribute_[0-9]+$&quot;</span>, <span class="kw">colnames</span>(out_data_dataset))]))</span>
+<span id="cb4-240"><a href="#cb4-240"></a>  attribute_var_names_label &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>,<span class="st">&quot;.&quot;</span>, attribute_var_names)</span>
+<span id="cb4-241"><a href="#cb4-241"></a>  </span>
+<span id="cb4-242"><a href="#cb4-242"></a>  <span class="cf">for</span> (i <span class="cf">in</span> num_tasks){</span>
+<span id="cb4-243"><a href="#cb4-243"></a>    <span class="cf">for</span> (j <span class="cf">in</span> num_profiles){</span>
+<span id="cb4-244"><a href="#cb4-244"></a>      <span class="cf">for</span> (r <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(attribute_var_names)){</span>
+<span id="cb4-245"><a href="#cb4-245"></a>        temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;&quot;</span>,attribute_var_names[r],<span class="st">&quot;_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;]&lt;-&#39;&#39;&quot;</span>)</span>
+<span id="cb4-246"><a href="#cb4-246"></a>        <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-247"><a href="#cb4-247"></a>        temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;&quot;</span>,attribute_var_names[r],<span class="st">&quot;.rowpos_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;]&lt;-&#39;&#39;&quot;</span>)</span>
+<span id="cb4-248"><a href="#cb4-248"></a>        <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-249"><a href="#cb4-249"></a>      }</span>
+<span id="cb4-250"><a href="#cb4-250"></a>    }</span>
+<span id="cb4-251"><a href="#cb4-251"></a>  }</span>
+<span id="cb4-252"><a href="#cb4-252"></a>  </span>
+<span id="cb4-253"><a href="#cb4-253"></a>  <span class="cf">for</span> (i <span class="cf">in</span> num_tasks){</span>
+<span id="cb4-254"><a href="#cb4-254"></a>    <span class="cf">for</span> (j <span class="cf">in</span> num_profiles){</span>
+<span id="cb4-255"><a href="#cb4-255"></a>      <span class="cf">for</span> (k <span class="cf">in</span> num_attr){</span>
+<span id="cb4-256"><a href="#cb4-256"></a>        <span class="cf">for</span> (r <span class="cf">in</span> attribute_var_names){</span>
+<span id="cb4-257"><a href="#cb4-257"></a>          temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;&quot;</span>,r,<span class="st">&quot;_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;]&quot;</span>,</span>
+<span id="cb4-258"><a href="#cb4-258"></a>                             <span class="st">&quot;[out_data_dataset[&#39;attribute_&quot;</span>,k,<span class="st">&quot;&#39;]==&#39;&quot;</span>,r,</span>
+<span id="cb4-259"><a href="#cb4-259"></a>                             <span class="st">&quot;&#39;]&lt;-out_data_dataset[&#39;&quot;</span>,letter,<span class="st">&quot;_&quot;</span>,i,<span class="st">&quot;_&quot;</span>,j,<span class="st">&quot;_&quot;</span>,k,</span>
+<span id="cb4-260"><a href="#cb4-260"></a>                             <span class="st">&quot;&#39;][out_data_dataset[&#39;attribute_&quot;</span>,k,<span class="st">&quot;&#39;]==&#39;&quot;</span>,r,<span class="st">&quot;&#39;]&quot;</span>)</span>
+<span id="cb4-261"><a href="#cb4-261"></a>          <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-262"><a href="#cb4-262"></a>          </span>
+<span id="cb4-263"><a href="#cb4-263"></a>          temp.cmd &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;out_data_dataset[&#39;&quot;</span>,r,<span class="st">&quot;.rowpos&quot;</span>,<span class="st">&quot;_&quot;</span>,j,<span class="st">&quot;-&quot;</span>,i,<span class="st">&quot;&#39;&quot;</span>,</span>
+<span id="cb4-264"><a href="#cb4-264"></a>                             <span class="st">&quot;][out_data_dataset[&#39;attribute_&quot;</span>,k,<span class="st">&quot;&#39;]==&#39;&quot;</span>,r,</span>
+<span id="cb4-265"><a href="#cb4-265"></a>                             <span class="st">&quot;&#39;]&lt;-k&quot;</span>)</span>
+<span id="cb4-266"><a href="#cb4-266"></a>          <span class="kw">eval</span>(<span class="kw">parse</span>(<span class="dt">text=</span>temp.cmd))</span>
+<span id="cb4-267"><a href="#cb4-267"></a>        }</span>
+<span id="cb4-268"><a href="#cb4-268"></a>      }</span>
+<span id="cb4-269"><a href="#cb4-269"></a>    }</span>
+<span id="cb4-270"><a href="#cb4-270"></a>  }</span>
+<span id="cb4-271"><a href="#cb4-271"></a>  </span>
+<span id="cb4-272"><a href="#cb4-272"></a>  temp_regexp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">c</span>(<span class="st">&quot;^&quot;</span>,letter,<span class="st">&quot;_[0-9]+_[0-9]+_[0-9]+$&quot;</span>),<span class="dt">collapse=</span><span class="st">&quot;&quot;</span>)</span>
+<span id="cb4-273"><a href="#cb4-273"></a>  temp.col.index &lt;-<span class="st"> </span><span class="kw">grep</span>(temp_regexp,<span class="kw">colnames</span>(out_data_dataset), <span class="dt">perl=</span><span class="ot">TRUE</span>)</span>
+<span id="cb4-274"><a href="#cb4-274"></a>  out_data_dataset &lt;-<span class="st"> </span>out_data_dataset[,<span class="op">-</span>temp.col.index]</span>
+<span id="cb4-275"><a href="#cb4-275"></a>  </span>
+<span id="cb4-276"><a href="#cb4-276"></a>  <span class="co"># Delete attribute names</span></span>
+<span id="cb4-277"><a href="#cb4-277"></a>  regex.temp &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;^attribute&quot;</span>,<span class="st">&quot;_[0-9]+&quot;</span>,<span class="st">&quot;$&quot;</span>)</span>
+<span id="cb4-278"><a href="#cb4-278"></a>  out_data_dataset &lt;-<span class="st"> </span>out_data_dataset[,<span class="op">-</span><span class="kw">grep</span>(regex.temp, <span class="kw">colnames</span>(out_data_dataset))]</span>
+<span id="cb4-279"><a href="#cb4-279"></a>  </span>
+<span id="cb4-280"><a href="#cb4-280"></a>  <span class="co"># Reshape the dataset Batch 1 - Round/Task</span></span>
+<span id="cb4-281"><a href="#cb4-281"></a>  <span class="co">## Martin&#39;s addition</span></span>
+<span id="cb4-282"><a href="#cb4-282"></a>  regex.temp<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
+<span id="cb4-283"><a href="#cb4-283"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(attribute_var_names)){</span>
+<span id="cb4-284"><a href="#cb4-284"></a>    regex.temp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>,attribute_var_names[i],<span class="st">&quot;_[0-9]+-[0-9]+&quot;</span>,<span class="st">&quot;$&quot;</span>),</span>
+<span id="cb4-285"><a href="#cb4-285"></a>                        <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)</span>
+<span id="cb4-286"><a href="#cb4-286"></a>    regex.temp<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>, attribute_var_names[i], </span>
+<span id="cb4-287"><a href="#cb4-287"></a>                                 <span class="st">&quot;.rowpos_[0-9]+-[0-9]+&quot;</span>,<span class="st">&quot;$&quot;</span>), <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)</span>
+<span id="cb4-288"><a href="#cb4-288"></a>    </span>
+<span id="cb4-289"><a href="#cb4-289"></a>    </span>
+<span id="cb4-290"><a href="#cb4-290"></a>    <span class="co"># Take this out</span></span>
+<span id="cb4-291"><a href="#cb4-291"></a>    <span class="co">#    regex.temp &lt;- paste(paste0(&quot;^&quot;, re.escape(attribute_var_names),</span></span>
+<span id="cb4-292"><a href="#cb4-292"></a>    <span class="co">#                               &quot;_[0-9]+-[0-9]+&quot;,&quot;$&quot;), collapse=&quot;|&quot;)</span></span>
+<span id="cb4-293"><a href="#cb4-293"></a>    <span class="co">#    regex.temp.2 &lt;- paste(paste0(&quot;^&quot;, re.escape(attribute_var_names),</span></span>
+<span id="cb4-294"><a href="#cb4-294"></a>    <span class="co">#                                 &quot;.rowpos_[0-9]+-[0-9]+&quot;,&quot;$&quot;), collapse=&quot;|&quot;)</span></span>
+<span id="cb4-295"><a href="#cb4-295"></a></span>
+<span id="cb4-296"><a href="#cb4-296"></a>    varying.temp &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(regex.temp, <span class="kw">colnames</span>(out_data_dataset))]</span>
+<span id="cb4-297"><a href="#cb4-297"></a>    varying.temp<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(regex.temp<span class="fl">.2</span>, <span class="kw">colnames</span>(out_data_dataset))]</span>
+<span id="cb4-298"><a href="#cb4-298"></a>    varying.temp<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(<span class="st">&quot;^selected_[0-9]+-[0-9]+$&quot;</span>, <span class="kw">colnames</span>(out_data_dataset))]</span>
+<span id="cb4-299"><a href="#cb4-299"></a>    </span>
+<span id="cb4-300"><a href="#cb4-300"></a>    varying.temp &lt;-<span class="st"> </span><span class="kw">c</span>(varying.temp, varying.temp<span class="fl">.2</span>, varying.temp<span class="fl">.3</span>)</span>
+<span id="cb4-301"><a href="#cb4-301"></a>    </span>
+<span id="cb4-302"><a href="#cb4-302"></a>    v.names.temp &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">gsub</span>(<span class="st">&quot;-[0-9]+$&quot;</span>,<span class="st">&quot;&quot;</span>,varying.temp))</span>
+<span id="cb4-303"><a href="#cb4-303"></a>    v.names.temp &lt;-<span class="st"> </span>v.names.temp[<span class="kw">order</span>(v.names.temp)]</span>
+<span id="cb4-304"><a href="#cb4-304"></a>    </span>
+<span id="cb4-305"><a href="#cb4-305"></a>    varying.temp &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">rep</span>(v.names.temp, <span class="kw">length</span>(num_tasks)),<span class="st">&quot;-&quot;</span>,</span>
+<span id="cb4-306"><a href="#cb4-306"></a>                           <span class="kw">rep</span>(num_tasks, <span class="dt">each=</span><span class="kw">length</span>(v.names.temp)))</span>
+<span id="cb4-307"><a href="#cb4-307"></a>    </span>
+<span id="cb4-308"><a href="#cb4-308"></a>    </span>
+<span id="cb4-309"><a href="#cb4-309"></a>    out_data_dataset &lt;-<span class="st"> </span><span class="kw">reshape</span>(out_data_dataset,</span>
+<span id="cb4-310"><a href="#cb4-310"></a>                                <span class="dt">idvar =</span> id_var_name,</span>
+<span id="cb4-311"><a href="#cb4-311"></a>                                <span class="dt">varying =</span> varying.temp,</span>
+<span id="cb4-312"><a href="#cb4-312"></a>                                <span class="dt">sep =</span> <span class="st">&quot;-&quot;</span>,</span>
+<span id="cb4-313"><a href="#cb4-313"></a>                                <span class="dt">timevar =</span> <span class="st">&quot;task&quot;</span>,</span>
+<span id="cb4-314"><a href="#cb4-314"></a>                                <span class="dt">times =</span> num_tasks,</span>
+<span id="cb4-315"><a href="#cb4-315"></a>                                <span class="dt">v.names =</span> v.names.temp,</span>
+<span id="cb4-316"><a href="#cb4-316"></a>                                <span class="dt">new.row.names =</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw">length</span>(num_tasks)<span class="op">*</span><span class="kw">nrow</span>(out_data_dataset)),</span>
+<span id="cb4-317"><a href="#cb4-317"></a>                                <span class="dt">direction =</span> <span class="st">&quot;long&quot;</span>)</span>
+<span id="cb4-318"><a href="#cb4-318"></a>  }</span>
+<span id="cb4-319"><a href="#cb4-319"></a>  <span class="co"># Reshape the dataset Batch 2 - Profile</span></span>
+<span id="cb4-320"><a href="#cb4-320"></a>  </span>
+<span id="cb4-321"><a href="#cb4-321"></a>  <span class="co">### Martin&#39;s addition</span></span>
+<span id="cb4-322"><a href="#cb4-322"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(attribute_var_names)){</span>
+<span id="cb4-323"><a href="#cb4-323"></a>    regex.temp &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>, attribute_var_names[i], <span class="st">&quot;_[0-9]+&quot;</span>,<span class="st">&quot;$&quot;</span>), <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)</span>
+<span id="cb4-324"><a href="#cb4-324"></a>    regex.temp<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="kw">paste0</span>(<span class="st">&quot;^&quot;</span>,attribute_var_names[i], <span class="st">&quot;.rowpos_[0-9]+&quot;</span>,<span class="st">&quot;$&quot;</span>), <span class="dt">collapse=</span><span class="st">&quot;|&quot;</span>)</span>
+<span id="cb4-325"><a href="#cb4-325"></a>    </span>
+<span id="cb4-326"><a href="#cb4-326"></a>    <span class="co"># Take this out</span></span>
+<span id="cb4-327"><a href="#cb4-327"></a>    <span class="co">#    regex.temp &lt;- paste(paste0(&quot;^&quot;, re.escape(attribute_var_names),</span></span>
+<span id="cb4-328"><a href="#cb4-328"></a>    <span class="co">#                               &quot;_[0-9]+-[0-9]+&quot;,&quot;$&quot;), collapse=&quot;|&quot;)</span></span>
+<span id="cb4-329"><a href="#cb4-329"></a>    <span class="co">#    regex.temp.2 &lt;- paste(paste0(&quot;^&quot;, re.escape(attribute_var_names),</span></span>
+<span id="cb4-330"><a href="#cb4-330"></a>    <span class="co">#                                 &quot;.rowpos_[0-9]+-[0-9]+&quot;,&quot;$&quot;), collapse=&quot;|&quot;)</span></span>
+<span id="cb4-331"><a href="#cb4-331"></a>    </span>
+<span id="cb4-332"><a href="#cb4-332"></a>    varying.temp &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(regex.temp, <span class="kw">colnames</span>(out_data_dataset))]</span>
+<span id="cb4-333"><a href="#cb4-333"></a>    varying.temp<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(regex.temp<span class="fl">.2</span>, <span class="kw">colnames</span>(out_data_dataset))]</span>
+<span id="cb4-334"><a href="#cb4-334"></a>    varying.temp<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">colnames</span>(out_data_dataset)[<span class="kw">grep</span>(<span class="st">&quot;^selected_[0-9]+$&quot;</span>, <span class="kw">colnames</span>(out_data_dataset))]</span>
+<span id="cb4-335"><a href="#cb4-335"></a>    varying.temp &lt;-<span class="st"> </span><span class="kw">c</span>(varying.temp, varying.temp<span class="fl">.2</span>, varying.temp<span class="fl">.3</span>)</span>
+<span id="cb4-336"><a href="#cb4-336"></a>    </span>
+<span id="cb4-337"><a href="#cb4-337"></a>    v.names.temp &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">gsub</span>(<span class="st">&quot;_[0-9]+$&quot;</span>,<span class="st">&quot;&quot;</span>,varying.temp))</span>
+<span id="cb4-338"><a href="#cb4-338"></a>    v.names.temp &lt;-<span class="st"> </span>v.names.temp[<span class="kw">order</span>(v.names.temp)]</span>
+<span id="cb4-339"><a href="#cb4-339"></a>    </span>
+<span id="cb4-340"><a href="#cb4-340"></a>    varying.temp &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="kw">rep</span>(v.names.temp, <span class="kw">length</span>(num_profiles)),<span class="st">&quot;_&quot;</span>,</span>
+<span id="cb4-341"><a href="#cb4-341"></a>                           <span class="kw">rep</span>(num_profiles, <span class="dt">each=</span><span class="kw">length</span>(v.names.temp)))</span>
+<span id="cb4-342"><a href="#cb4-342"></a>    </span>
+<span id="cb4-343"><a href="#cb4-343"></a>    out_data_dataset &lt;-<span class="st"> </span><span class="kw">reshape</span>(out_data_dataset,</span>
+<span id="cb4-344"><a href="#cb4-344"></a>                                <span class="dt">idvar =</span> id_var_name,</span>
+<span id="cb4-345"><a href="#cb4-345"></a>                                <span class="dt">varying =</span> varying.temp,</span>
+<span id="cb4-346"><a href="#cb4-346"></a>                                <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb4-347"><a href="#cb4-347"></a>                                <span class="dt">timevar =</span> <span class="st">&quot;profile&quot;</span>,</span>
+<span id="cb4-348"><a href="#cb4-348"></a>                                <span class="dt">times =</span> num_profiles,</span>
+<span id="cb4-349"><a href="#cb4-349"></a>                                <span class="dt">v.names =</span> v.names.temp,</span>
+<span id="cb4-350"><a href="#cb4-350"></a>                                <span class="dt">new.row.names =</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw">length</span>(num_profiles)<span class="op">*</span><span class="kw">nrow</span>(out_data_dataset)),</span>
+<span id="cb4-351"><a href="#cb4-351"></a>                                <span class="dt">direction =</span> <span class="st">&quot;long&quot;</span>)</span>
+<span id="cb4-352"><a href="#cb4-352"></a>  }</span>
+<span id="cb4-353"><a href="#cb4-353"></a>  <span class="co">## Post-processiong</span></span>
+<span id="cb4-354"><a href="#cb4-354"></a>  <span class="kw">colnames</span>(out_data_dataset) &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>,<span class="st">&quot;.&quot;</span>,<span class="kw">colnames</span>(out_data_dataset))</span>
+<span id="cb4-355"><a href="#cb4-355"></a>  </span>
+<span id="cb4-356"><a href="#cb4-356"></a>  <span class="cf">for</span> (m <span class="cf">in</span> attribute_var_names_label){</span>
+<span id="cb4-357"><a href="#cb4-357"></a>    out_data_dataset[[m]] &lt;-<span class="st"> </span><span class="kw">as.factor</span>(out_data_dataset[[m]])</span>
+<span id="cb4-358"><a href="#cb4-358"></a>  }</span>
+<span id="cb4-359"><a href="#cb4-359"></a>  </span>
+<span id="cb4-360"><a href="#cb4-360"></a>  <span class="kw">colnames</span>(out_data_dataset)[<span class="kw">which</span>(<span class="kw">colnames</span>(out_data_dataset)<span class="op">==</span>id_var_name)] &lt;-<span class="st"> &quot;respondent&quot;</span></span>
+<span id="cb4-361"><a href="#cb4-361"></a>  out_data_dataset<span class="op">$</span>respondentIndex &lt;-<span class="st"> </span><span class="kw">as.factor</span>(out_data_dataset<span class="op">$</span>respondent)</span>
+<span id="cb4-362"><a href="#cb4-362"></a>  out_data_dataset<span class="op">$</span>respondentIndex &lt;-<span class="st"> </span><span class="kw">as.integer</span>(out_data_dataset<span class="op">$</span>respondentIndex)</span>
+<span id="cb4-363"><a href="#cb4-363"></a>  out_data_dataset<span class="op">$</span>selected &lt;-<span class="st"> </span><span class="kw">as.integer</span>(out_data_dataset<span class="op">$</span>selected)</span>
+<span id="cb4-364"><a href="#cb4-364"></a>  out_data_dataset<span class="op">$</span>task &lt;-<span class="st"> </span><span class="kw">as.integer</span>(out_data_dataset<span class="op">$</span>task)</span>
+<span id="cb4-365"><a href="#cb4-365"></a>  out_data_dataset<span class="op">$</span>profile &lt;-<span class="st"> </span><span class="kw">as.integer</span>(out_data_dataset<span class="op">$</span>profile)</span>
+<span id="cb4-366"><a href="#cb4-366"></a>  </span>
+<span id="cb4-367"><a href="#cb4-367"></a>  <span class="co"># Return dataset</span></span>
+<span id="cb4-368"><a href="#cb4-368"></a>  <span class="kw">return</span>(out_data_dataset)</span>
+<span id="cb4-369"><a href="#cb4-369"></a>}</span></code></pre></div>
 </div>
 <div id="register-an-account-on-a-php-web-host-service" class="section level2">
 <h2><span class="header-section-number">1.4</span> Register an account on a PHP web host service</h2>
