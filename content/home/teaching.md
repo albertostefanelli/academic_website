@@ -15,16 +15,24 @@ weight = 60
 
 +++
 
+**Instructor for the following courses:**
+
++ Introduction to Conjoint Experiments (ECPR Winter School, 2020)
+
++ Propensity Matching and Standardisation techniques (Hebrew University of Jerusalem, Jerusalem, Israel, 2019)
+
 **I have served as Teaching Assistant for the following courses:**
 
-+ Automated Collection of Web and Social Data (Pablo Barberá, Summer 2018, ECPR)
++ Advance Multilevel Modelling (Levente (Levi) Littvay, ECPR, 2020)
 
-+ R Basics (Akos Mate, Summer 2018, ECPR)
++ Automated Collection of Web and Social Data (Theresa Gessler (2019) and Pablo Barbera (2018), ECPR)
 
-+ Text Mining Boot Camp (ITI Project, Srpint 2018, Central European University)
++ R Basics (Akos Mate, ECPR, 2018)
 
-+ Regression Refresher (Levente (Levi) Littvay, Winter 2018, ECPR)
++ Text Mining Boot Camp (ITI Project, Central European University, 2018)
 
-+ Experimental Political Science (Levente (Levi) Littvay, Winter 2018, Central European University)
++ Regression Refresher (Levente (Levi) Littvay, ECPR, 2018)
 
-+ Text Analysis Across Discipline (ITI Project, Fall 2017, Central European University)
++ Experimental Political Science (Levente (Levi) Littvay, Central European University, 2018)
+
++ Text Analysis Across Discipline (ITI Project, Central European University, 2017)
