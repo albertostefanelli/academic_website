@@ -26,7 +26,7 @@ weight = 5
   institution = " KU Leuven, Leuven, Belgium"
 
 [[education.courses]]
-  course = "MS in Statistics"
+  course = "MSc in Statistics"
   institution = " KU Leuven, Leuven, Belgium"
 
 [[education.courses]]
@@ -43,10 +43,9 @@ weight = 5
 
 # Biography
 
-I am a PhD candidate at the the [Institute for Social and Political Opinion Research (ISPO)](https://soc.kuleuven.be/ceso/ispo), KU Leuven, Belgium. My PhD is on Political Radicalization in Ethnic Minorities, Views on Western Society, Liberal Values, and Politics. 
+I am a PhD candidate at the the [Institute for Social and Political Opinion Research (ISPO)](https://soc.kuleuven.be/ceso/ispo), KU Leuven, Belgium. My PhD is on political radicalism and belief systems, views on Western Society, Conditionality of liberal values, and polarisation. 
 
-
-More generally, my research interests are mostly within the filed of voting behaviour, party finance, and political communication. Methods wise, I am particularly interested in graphical causal models, machine learning algorithms, text analysis, and big data. 
+More generally, my research interests are mostly within the filed of voting behaviour, party finance, and political communication. Methods wise, I am particularly interested in conjoint analysis, matching techniques graphical causal models, machine learning algorithms, text analysis, and big data. 
 
 I am a member of the survey and experimental teams of [Team Populism](http://www.teampopulism.com/), a research group that brings together renowned scholars from Europe and the Americas to study the causes and consequences of populism.
 
