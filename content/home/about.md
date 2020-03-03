@@ -26,7 +26,7 @@ weight = 5
   institution = " KU Leuven, Leuven, Belgium"
 
 [[education.courses]]
-  course = "MSc in Statistics"
+  course = "MSc in Statistics, 2021"
   institution = " KU Leuven, Leuven, Belgium"
 
 [[education.courses]]
@@ -43,7 +43,7 @@ weight = 5
 
 # Biography
 
-I am a PhD candidate at the the [Institute for Social and Political Opinion Research (ISPO)](https://soc.kuleuven.be/ceso/ispo), KU Leuven, Belgium. My PhD is on political radicalism and belief systems, views on Western Society, Conditionality of liberal values, and polarisation. 
+I am a PhD candidate at the the [Institute for Social and Political Opinion Research (ISPO)](https://soc.kuleuven.be/ceso/ispo), KU Leuven, Belgium. My PhD is on political radicalism and belief systems, views on Western society, conditionality of liberal values, and polarisation. 
 
 More generally, my research interests are mostly within the filed of voting behaviour, party finance, and political communication. Methods wise, I am particularly interested in conjoint analysis, matching techniques graphical causal models, machine learning algorithms, text analysis, and big data. 
 
