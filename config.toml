@@ -302,11 +302,6 @@ enableGitInfo = false
     url = "files/stefanelli_CV_academic.pdf"
     weight = 7
 
-[[menu.main]]
-    name = "Academic Materials"
-    url = #academic_materials
-    weight = 8
-
 # Taxonomies.
 [taxonomies]
   tag = "tags"
