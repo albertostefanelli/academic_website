@@ -1,24 +1,9 @@
 ---
-title:  |
-        |Propensity Score Matching 
-        |LAB Session
-author: Alberto Stefanelli and Prof. Sharon Gilad 
-# date: "`r Sys.Date()`"
-# fontsize: 10pt 
-# bibliography: /Users/serg/gdrive/academia/library.bib
-# link-citations: yes
-# linkcolor: blue
-output: html_document
-# header-includes:
-#   - \usepackage{booktabs}
-#   - \usepackage{float}
-#   - \usepackage{pdflscape}
-#   - \usepackage{dcolumn}
-#   #- \DeclareUnicodeCharacter{301}{-}
-#   - \widowpenalties 1 150
-#   - \newcommand{\CI}{\mathrel{\perp\mspace{-10mu}\perp}}
-
-
+title: "Lab Week 1"
+author: "Drew Tyre"
+date: "2016-08-20"
+type: "lab"
+weight: 222011
 ---
 
 # Setting up R 
