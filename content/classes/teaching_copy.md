@@ -1,38 +1,25 @@
 +++
-# Custom widget.
-# An example of using the custom widget to create your own homepage section.
-# To create more sections, duplicate this file and edit the values below as desired.
-widget = "custom"
-active = true
-date = 2016-04-20T00:00:00
+title = "LOL"
+date = "2017-08-01T00:00:00Z"
+math = false
+highlight = false
+weight = 222000
+# Optional featured image (relative to `static/img/` folder).
+[header]
 
-# Note: a full width section format can be enabled by commenting out the `title` and `subtitle` with a `#`.
-title = "Teaching Experience_1"
-subtitle = ""
-
-# Order that this section will appear in.
-weight = 60
+caption = ""
 
 +++
 
-**Instructor for the following courses:**
 
-+ Introduction to Conjoint Experiments (ECPR Winter School, 2020)
+## Statement on Diversity
 
-+ Propensity Matching and Standardisation techniques (Hebrew University of Jerusalem, Jerusalem, Israel, 2019)
+I want our classroom to be a safe and inclusive place for all. Every individual is valued, has the capability to succeed and has something to offer the class. While our class may only be a temporary solace from the fear, suffering or depression you may be facing in your day as a result of racism, homophobia, transphobia, sexism, legal/immigration status, political belief, or any other discrimination, know that I am always here for you. My door is always open. 
 
-**I have served as Teaching Assistant for the following courses:**
+## Setup
 
-+ Advance Multilevel Modelling (Levente (Levi) Littvay, ECPR, 2020)
+Before the first week of class, you need to [install some software on your computer][computer-setup]. If you want some help, watch these videos
 
-+ Automated Collection of Web and Social Data (Theresa Gessler (2019) and Pablo Barbera (2018), ECPR)
+* [Introduction to RStudio](https://youtu.be/FNrCxTSzq6s)
 
-+ R Basics (Akos Mate, ECPR, 2018)
-
-+ Text Mining Boot Camp (ITI Project, Central European University, 2018)
-
-+ Regression Refresher (Levente (Levi) Littvay, ECPR, 2018)
-
-+ Experimental Political Science (Levente (Levi) Littvay, Central European University, 2018)
-
-+ Text Analysis Across Discipline (ITI Project, Central European University, 2017)
+## Weeks 1 - 4
