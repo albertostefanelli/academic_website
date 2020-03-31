@@ -44,7 +44,7 @@ Below some notes on the installation and setup of R and relevant packages on you
 - If you are using OS X, you will need to to install XCode, available for free from the App Store. This will install a compiler (if you don’t have a compiler installed) which will be needed when installing packages from GitHub that require compilation from C++ source code.
 - Install the latest version of R from CRAN (https://cran.r-project.org/).
 - Install the latest version of RStudio (https://www.rstudio.com/products/RStudio/). RStudio is the editor we’ll rely on, i.e. we’ll write code in RStudio which is subsequently sent to and run within R.
-- Install the latest versions of various packages that we need. You can follow this [setup](setup_rmd). 
+- Install the latest versions of various packages that we need. You can follow this [setup][setup_rmd]. 
 
 
 ## Set up the Environment on your local machine 
