@@ -14,19 +14,16 @@ weight = 5
     "Public Opinion", 
     "Populism",
     "Democratic representation", 
-    "Campaign and party finance",
-    "Text Analysis",
-    "Big Data", 
-    "Machine Learning"
+    "Experimental Design"
   ]
 
 # List your qualifications (such as academic degrees).
 [[education.courses]]
-  course = "PhD Candidate"
+  course = "Junior Researcher"
   institution = " KU Leuven, Leuven, Belgium"
 
 [[education.courses]]
-  course = "MSc in Statistics, 2021"
+  course = "MSc in Statistics, (expected 2021)"
   institution = " KU Leuven, Leuven, Belgium"
 
 [[education.courses]]
@@ -43,12 +40,14 @@ weight = 5
 
 # Biography
 
-I am a PhD candidate at the the [Institute for Social and Political Opinion Research (ISPO)](https://soc.kuleuven.be/ceso/ispo), KU Leuven, Belgium. My PhD is on political radicalism and belief systems, views on Western society, conditionality of liberal values, and polarisation. 
+I am a researcher at the [Institute for Social and Political Opinion Research (ISPO)](https://soc.kuleuven.be/ceso/ispo), KU Leuven, Belgium. I am currently working on the questionnaire design and data collection for the Belgian National Electoral Study (BNES) and the Belgian Ethnic Minorities Election Study (BEMES).
 
-More generally, my research interests are mostly within the filed of voting behaviour, party finance, and political communication. Methods wise, I am particularly interested in conjoint analysis, matching techniques graphical causal models, machine learning algorithms, text analysis, and big data. 
+My research interests are mostly within the field of public opinion, voting behaviour, and attitudes towards democracy. Specifically, I am working on radical belief systems, conditionality of liberal values, and polarisation. 
+
+Methods wise, I am particularly interested in conjoint analysis, matching and standardization techniques, graphical causal models, machine learning, text analysis, and big data. 
 
 I am a member of the survey and experimental teams of [Team Populism](http://www.teampopulism.com/), a research group that brings together renowned scholars from Europe and the Americas to study the causes and consequences of populism.
 
-Concerning the private sector, I am an currently external consultant and analyst for [ZK Analytics](http://www.zkanalytics.com/) and for the [European Consortium for Political Research (Methods Schools)](https://ecpr.eu/Events/EventTypeDetails.aspx?EventTypeID=5). 
+Concerning the private sector, I am an external consultant and analyst for [ZK Analytics](http://www.zkanalytics.com/) and for the [European Consortium for Political Research (Methods Schools)](https://ecpr.eu/Events/EventTypeDetails.aspx?EventTypeID=5). 
 
-I love cooking, films, games, reading about tech stuff, and programming. Huge Linux/Unix fan boy.
+I love cooking, games, reading about tech stuff, and programming. Huge Linux/Unix fan boy.
