@@ -10,12 +10,12 @@ weight = 5
 # List your academic interests.
 [interests]
   interests = [
-    "Voting Behaviour",
-    "Public Opinion", 
+    "Voting behaviour",
+    "Public opinion", 
     "Populism",
     "Radicalism",
     "Democratic representation", 
-    "Experimental Design"
+    "Experimental designs"
   ]
 
 # List your qualifications (such as academic degrees).
@@ -24,7 +24,7 @@ weight = 5
   institution = " KU Leuven, Leuven, Belgium"
 
 [[education.courses]]
-  course = "MSc in Statistics, (expected 2021)"
+  course = "MSc in Statistics, expected 2021"
   institution = " KU Leuven, Leuven, Belgium"
 
 [[education.courses]]
