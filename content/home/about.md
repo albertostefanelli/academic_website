@@ -13,6 +13,7 @@ weight = 5
     "Voting Behaviour",
     "Public Opinion", 
     "Populism",
+    "Radicalism"
     "Democratic representation", 
     "Experimental Design"
   ]
