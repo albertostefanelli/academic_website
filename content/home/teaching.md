@@ -23,7 +23,13 @@ weight = 60
 
 **I have served as Teaching Assistant for the following courses:**
 
++ Multi-level Structural Equation Modelling (Bruno Castanho Silva,  ECPR, 2021)
+
++ Structural Equation Modelling (Bart Meuleman, ECPR, 2021)
+
 + Advance Multilevel Modelling (Levente (Levi) Littvay, ECPR, 2020)
+
++ Logistic Regression and Generalised Linear Models (Michał Kotnarowski, 2019, ECPR)
 
 + Automated Collection of Web and Social Data (Theresa Gessler (2019) and Pablo Barbera (2018), ECPR)
 

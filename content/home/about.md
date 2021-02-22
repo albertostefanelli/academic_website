@@ -41,9 +41,7 @@ weight = 5
 
 # Biography
 
-I am a FWO PhD Fellow at the [Institute for Social and Political Opinion Research (ISPO)](https://soc.kuleuven.be/ceso/ispo), KU Leuven, Belgium. I am currently working on the questionnaire design and data collection for the Belgian National Electoral Study (BNES) and the Belgian Ethnic Minorities Election Study (BEMES).
-
-My research interests are mostly within the field of public opinion, voting behaviour, and attitudes towards democracy. My PhD is on radical belief systems, conditionality of liberal values, and polarisation. 
+I am a FWO PhD Fellow at the [Institute for Social and Political Opinion Research (ISPO)](https://soc.kuleuven.be/ceso/ispo), KU Leuven, Belgium. My research interests are mostly within the field of public opinion, voting behaviour, and attitudes towards democracy. My PhD is on radical belief systems, conditionality of liberal values, and polarisation. I am currently working on the questionnaire design and data collection for the Belgian National Electoral Study (BNES) and the Belgian Ethnic Minorities Election Study (BEMES).
 
 Methods wise, I am particularly interested in conjoint analysis, matching and standardization techniques, graphical causal models, machine learning, and big data. 
 
@@ -51,4 +49,4 @@ I am a member of the survey and experimental teams of [Team Populism](http://www
 
 Concerning the private sector, I am an external consultant and analyst for [ZK Analytics](http://www.zkanalytics.com/) and for the [European Consortium for Political Research (Methods Schools)](https://ecpr.eu/Events/EventTypeDetails.aspx?EventTypeID=5). 
 
-I love cooking, woodworking, and reading about how individuals make choices. Huge Linux fan boy.
+I have too many hobbies but what never gets me tried is cooking, woodworking, and reading about how individuals make choices. Huge Linux fan boy. 
